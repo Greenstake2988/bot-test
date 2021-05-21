@@ -12,6 +12,7 @@ bool orden_nueva = false;
 json JSON_FILE;
 
 int main() {
+
 	TgBot::Bot bot("1864266042:AAH-1fI-aLsGN78pWbBRmXYiyeOnV9Y86Rg");
 
 	//Aqui dependiendo del '/commando/ la funcion actua
@@ -46,21 +47,14 @@ int main() {
 		json clientes_guardados;
 		open_file >> clientes_guardados;
 
-
-
 		//for (json::iterator i = clientes_guardados.begin(); i != clientes_guardados.end(); ++i) {}
-		if (clientes_guardados.contains(id_cliente)){
+		if (!clientes_guardados.contains(id_cliente)){
 			bot.getApi().sendMessage(message->chat->id, "ya estas dado de alta");
 		}
-
 		if (USUARIO_NUEVO) {
-			bot.getApi().sendMessage(message->chat->id, "Cual es tu nombre.");
-			JSON_FILE["foo"] = "bar";
-			std::ofstream file("key.json");
-			file << JSON_FILE;
+			// aqui pasamos la funcion a /alta
 		} else {
-			std::string nombre = clientes_guardados["nombre"].get<std::string>();
-			bot.getApi().sendMessage(message->chat->id, "Hola " + nombre);
+			bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados["nombre"].get<std::string>());
 			//printf("Hola: %s\n", clientes_guardados["nombre"].dump().c_str());
 		}
 
@@ -69,6 +63,8 @@ int main() {
 	bot.getEvents().onCommand("comida", [&bot](TgBot::Message::Ptr message) {
 		bot.getApi().sendMessage(message->chat->id, "Que Quieres Comer?");
 	});
+
+
 
 
 	bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
