@@ -8,7 +8,7 @@ using json = nlohmann::json;
 
 bool usuario_nuevo = true;
 bool orden_nueva = false;
-json json_file;
+json JSON_FILE;
 
 int main() {
 	TgBot::Bot bot("1864266042:AAH-1fI-aLsGN78pWbBRmXYiyeOnV9Y86Rg");
@@ -18,6 +18,16 @@ int main() {
 		bot.getApi().sendMessage(message->chat->id, "Hola!");
 	});
 
+	bot.getEvents().onCommand("alta", [&bot](TgBot::Message::Ptr message) {
+		JSON_FILE["id"] =  std::to_string(message->from->id);
+		bot.getApi().sendMessage(message->chat->id, "Nombre: " + std::to_string(message->from->firstName););
+		JSON_FILE["nombre"] =  std::to_string(message->from->firstName);
+		bot.getApi().sendMessage(message->chat->id, "Apellido: " + std::to_string(message->from->lastName););
+		JSON_FILE["apellido"] =  std::to_string(message->from->lastName);
+		std::ofstream file("clientes.json");
+		file << JSON_FILE;
+	});
+
 	bot.getEvents().onCommand("menu", [&bot](TgBot::Message::Ptr message) {
 		bot.getApi().sendMessage(message->chat->id, "*Despliega el menu...");
 	});
@@ -25,9 +35,9 @@ int main() {
 	bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
 		if (usuario_nuevo) {
 			bot.getApi().sendMessage(message->chat->id, "Cual es tu nombre.");
-			json_file["foo"] = "bar";
+			JSON_FILE["foo"] = "bar";
 			std::ofstream file("key.json");
-			file << json_file;
+			file << JSON_FILE;
 		} else {
 			bot.getApi().sendMessage(message->chat->id, "Hola *su nombre*.");
 		}
