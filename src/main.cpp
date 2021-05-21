@@ -60,7 +60,7 @@ int main() {
 			file << JSON_FILE;
 		} else {
 			//bot.getApi().sendMessage(message->chat->id, "Hola " +  clientes_guardados["nombre"]);
-			printf("Hola: %s\n", (std::to_string(clientes_guardados["nombre"]).c_str()));
+			printf("Hola: %s\n", (clientes_guardados["nombre"]).c_str());
 		}
 
 	});
