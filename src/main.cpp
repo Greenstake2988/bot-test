@@ -17,9 +17,9 @@ int main() {
 	//Aqui dependiendo del '/commando/ la funcion actua
 	bot.getEvents().onCommand("start", [&bot](TgBot::Message::Ptr message) {
 		//Mensaje de bienvenida
-			bot.getApi().sendMessage(message->chat->id, "Que desas hacer: /n"
-														"Menu: /menu/n"
-														"Ordenar : /ordenar/n"
+			bot.getApi().sendMessage(message->chat->id, "Que desas hacer: \n"
+														"Menu: /menu\n"
+														"Ordenar : /ordenar\n"
 			);
 	});
 
