@@ -62,7 +62,9 @@ int main() {
 		if (USUARIO_NUEVO) {
 			// aqui pasamos la funcion a /alta
 		} else {
-			bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados["nombre"].get<std::string>());
+			if(not clientes_guardados["nombre"].empty()) {
+				bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados["nombre"].get<std::string>());
+			}
 			//printf("Hola: %s\n", clientes_guardados["nombre"].dump().c_str());
 		}
 
