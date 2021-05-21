@@ -59,7 +59,7 @@ int main() {
 			std::ofstream file("key.json");
 			file << JSON_FILE;
 		} else {
-			std::string nombre = clientes_guardados["nombre"].dump();
+			std::string nombre = clientes_guardados["nombre"].get<std::string>();
 			bot.getApi().sendMessage(message->chat->id, "Hola " + nombre);
 			//printf("Hola: %s\n", clientes_guardados["nombre"].dump().c_str());
 		}
