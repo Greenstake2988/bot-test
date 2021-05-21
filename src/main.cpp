@@ -84,10 +84,10 @@ int main() {
 		//Este esl Bucle infinito que espera los eventos
 		// y actua de acuero a ellos
 		//Mensaje de bienvenida
-		bot.getApi().sendMessage(message->chat->id, """Que desas hacer: 
-													Menu: /menu
-													Ordenar : /ordenar
-													""");
+		bot.getApi().sendMessage(message->chat->id, "Que desas hacer: "
+													"Menu: /menu"
+													"Ordenar : /ordenar"
+													);
 
 		while (true) {
 			printf("Long poll started\n");
