@@ -16,7 +16,11 @@ int main() {
 
 	//Aqui dependiendo del '/commando/ la funcion actua
 	bot.getEvents().onCommand("start", [&bot](TgBot::Message::Ptr message) {
-		bot.getApi().sendMessage(message->chat->id, "Hola!");
+		//Mensaje de bienvenida
+			bot.getApi().sendMessage(message->chat->id, "Que desas hacer: /n"
+														"Menu: /menu/n"
+														"Ordenar : /ordenar/n"
+			);
 	});
 
 	bot.getEvents().onCommand("alta", [&bot](TgBot::Message::Ptr message) {
@@ -69,11 +73,7 @@ int main() {
 		//Si el mensaje empieza con /start no devuvle el mensaje
 		//se sale de la funcion
 		if (StringTools::startsWith(message->text, "/start")) {
-			//Mensaje de bienvenida
-			bot.getApi().sendMessage(message->chat->id, "Que desas hacer: "
-														"Menu: /menu"
-														"Ordenar : /ordenar"
-			);
+			
 			return;
 		}
 		//Esta es la funcion que devuvle el mensaje al chat
