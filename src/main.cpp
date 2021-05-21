@@ -15,6 +15,9 @@ int main() {
 
 	TgBot::Bot bot("1864266042:AAH-1fI-aLsGN78pWbBRmXYiyeOnV9Y86Rg");
 
+	printf(std::ofstream file("clientes.json"));
+	//file << JSON_FILE;
+
 	//Aqui dependiendo del '/commando/ la funcion actua
 	bot.getEvents().onCommand("start", [&bot](TgBot::Message::Ptr message) {
 		//Mensaje de bienvenida
@@ -40,7 +43,7 @@ int main() {
 		bot.getApi().sendMessage(message->chat->id, "*Despliega el menu...");
 	});
 
-	bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
+	/* bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
 
 		std::string id_cliente = std::to_string(message->from->id);
 		std::ifstream open_file("clientes.json");
@@ -59,7 +62,7 @@ int main() {
 			//printf("Hola: %s\n", clientes_guardados["nombre"].dump().c_str());
 		}
 
-	});
+	}); */
 
 	bot.getEvents().onCommand("comida", [&bot](TgBot::Message::Ptr message) {
 		bot.getApi().sendMessage(message->chat->id, "Que Quieres Comer?");
