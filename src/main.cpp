@@ -20,10 +20,10 @@ int main() {
 
 	bot.getEvents().onCommand("alta", [&bot](TgBot::Message::Ptr message) {
 		JSON_FILE["id"] =  std::to_string(message->from->id);
-		bot.getApi().sendMessage(message->chat->id, "Nombre: " + std::to_string(message->from->firstName););
-		JSON_FILE["nombre"] =  std::to_string(message->from->firstName);
-		bot.getApi().sendMessage(message->chat->id, "Apellido: " + std::to_string(message->from->lastName););
-		JSON_FILE["apellido"] =  std::to_string(message->from->lastName);
+		bot.getApi().sendMessage(message->chat->id, "Nombre: " + message->from->firstName);
+		JSON_FILE["nombre"] =  message->from->firstName;
+		bot.getApi().sendMessage(message->chat->id, "Apellido: " + message->from->lastName);
+		JSON_FILE["apellido"] =  message->from->lastName;
 		std::ofstream file("clientes.json");
 		file << JSON_FILE;
 	});
