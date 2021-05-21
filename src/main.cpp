@@ -46,10 +46,9 @@ int main() {
 		json clientes_guardados;
 		open_file >> clientes_guardados;
 
-		for (json::iterator i = clientes_guardados.begin(); i != clientes_guardados.end(); ++i) {
-			if (i.contains(id_cliente)){
-				bot.getApi().sendMessage(message->chat->id, "ya estas dado de alta");
-			}
+		//for (json::iterator i = clientes_guardados.begin(); i != clientes_guardados.end(); ++i) {}
+		if (clientes_guardados.contains(id_cliente)){
+			bot.getApi().sendMessage(message->chat->id, "ya estas dado de alta");
 		}
 
 		if (USUARIO_NUEVO) {
