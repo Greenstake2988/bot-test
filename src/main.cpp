@@ -18,7 +18,7 @@ int main() {
 	std::ifstream clientes_guardados("clientes.json");
 	if(not clientes_guardados.good()){
 		std::ofstream clientes_guardados("clientes.json");
-		clientes_guardados << "{}";
+		clientes_guardados << "[]";
 	}
 	//file << JSON_FILE;
 
