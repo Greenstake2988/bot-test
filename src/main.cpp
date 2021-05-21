@@ -48,8 +48,9 @@ int main() {
 		open_file >> clientes_guardados;
 
 		//for (json::iterator i = clientes_guardados.begin(); i != clientes_guardados.end(); ++i) {}
+		//Si el id de cliente no esta dentro de nuestros id's.
 		if (not clientes_guardados.contains(id_cliente)){
-			bot.getApi().sendMessage(message->chat->id, "ya estas dado de alta");
+			bot.getApi().sendMessage(message->chat->id, "Presiona: /alta");
 		}
 		if (USUARIO_NUEVO) {
 			// aqui pasamos la funcion a /alta
