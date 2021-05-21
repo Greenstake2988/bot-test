@@ -63,10 +63,17 @@ int main() {
 			NUEVA_ALTA = false;
 		}
 
+		
+
 		//printf("Id usuario: %s\n", (std::to_string(message->from->id).c_str()));
 		//Si el mensaje empieza con /start no devuvle el mensaje
 		//se sale de la funcion
 		if (StringTools::startsWith(message->text, "/start")) {
+			//Mensaje de bienvenida
+			bot.getApi().sendMessage(message->chat->id, "Que desas hacer: "
+														"Menu: /menu"
+														"Ordenar : /ordenar"
+			);
 			return;
 		}
 		//Esta es la funcion que devuvle el mensaje al chat
@@ -83,12 +90,6 @@ int main() {
 		TgBot::TgLongPoll longPoll(bot);
 		//Este esl Bucle infinito que espera los eventos
 		// y actua de acuero a ellos
-		//Mensaje de bienvenida
-		bot.getApi().sendMessage(message->chat->id, "Que desas hacer: "
-													"Menu: /menu"
-													"Ordenar : /ordenar"
-													);
-
 		while (true) {
 			printf("Long poll started\n");
 			//printf();
