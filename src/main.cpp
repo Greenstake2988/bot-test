@@ -16,7 +16,7 @@ int main() {
 		bot.getApi().sendMessage(message->chat->id, "*Despliega el menu...");
 	});
 
-	bot.getEvents().onCommand("ordernar", [&bot](TgBot::Message::Ptr message) {
+	bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
 		if (usuario_nuevo) {
 			bot.getApi().sendMessage(message->chat->id, "Cual es tu nombre.");
 		} else {
