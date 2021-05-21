@@ -16,8 +16,9 @@ int main() {
 	TgBot::Bot bot("1864266042:AAH-1fI-aLsGN78pWbBRmXYiyeOnV9Y86Rg");
 
 	std::ifstream clientes_guardados("clientes.json");
-	if(clientes_guardados.good()){
-		printf("TODO BIEN");
+	if(not clientes_guardados.good()){
+		std::ofstream clientes_guardados("clientes.json");
+		clientes_guardados << "{}"
 	}
 	//file << JSON_FILE;
 
