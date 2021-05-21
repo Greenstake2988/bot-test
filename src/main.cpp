@@ -59,6 +59,8 @@ int main() {
 			JSON_FILE["direccion"] = message->text;
 			std::ofstream file("clientes.json");
 			file << JSON_FILE;
+			bot.getApi().sendMessage(message->chat->id, "Tus datos han sido guardados:");
+			NUEVA_ALTA = false;
 		}
 
 		//printf("Id usuario: %s\n", (std::to_string(message->from->id).c_str()));
@@ -81,6 +83,12 @@ int main() {
 		TgBot::TgLongPoll longPoll(bot);
 		//Este esl Bucle infinito que espera los eventos
 		// y actua de acuero a ellos
+		//Mensaje de bienvenida
+		bot.getApi().sendMessage(message->chat->id, "Que desas hacer: 
+													Menu: /menu
+													Ordenar : /ordenar
+													");
+
 		while (true) {
 			printf("Long poll started\n");
 			//printf();
