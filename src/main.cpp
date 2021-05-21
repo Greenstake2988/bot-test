@@ -2,16 +2,27 @@
 #include <tgbot/tgbot.h>
 #include <string>
 
-        int main() {
+bool usuario_nuevo = true;
+
+int main() {
 	TgBot::Bot bot("1864266042:AAH-1fI-aLsGN78pWbBRmXYiyeOnV9Y86Rg");
 
 	//Aqui dependiendo del '/commando/ la funcion actua
 	bot.getEvents().onCommand("start", [&bot](TgBot::Message::Ptr message) {
-	bot.getApi().sendMessage(message->chat->id, "Hola!");
+		bot.getApi().sendMessage(message->chat->id, "Hola!");
 	});
 
 	bot.getEvents().onCommand("menu", [&bot](TgBot::Message::Ptr message) {
-	bot.getApi().sendMessage(message->chat->id, "*Despliega el menu...");
+		bot.getApi().sendMessage(message->chat->id, "*Despliega el menu...");
+	});
+
+	bot.getEvents().onCommand("ordernar", [&bot](TgBot::Message::Ptr message) {
+		if (usuario_nuevo) {
+			bot.getApi().sendMessage(message->chat->id, "Cual es tu nombre.");
+		} else {
+			bot.getApi().sendMessage(message->chat->id, "Hola *su nombre*.");
+		}
+		
 	});
 
 	bot.getEvents().onCommand("comida", [&bot](TgBot::Message::Ptr message) {
