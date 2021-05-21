@@ -2,7 +2,7 @@
 #include <tgbot/tgbot.h>
 #include <string>
 
-bool usuario_nuevo = true;
+bool usuario_nuevo = false;
 
 int main() {
 	TgBot::Bot bot("1864266042:AAH-1fI-aLsGN78pWbBRmXYiyeOnV9Y86Rg");
