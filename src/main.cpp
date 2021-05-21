@@ -6,6 +6,7 @@
 
 using json = nlohmann::json;
 
+bool ALTA = false;
 bool usuario_nuevo = true;
 bool orden_nueva = false;
 json JSON_FILE;
@@ -19,13 +20,15 @@ int main() {
 	});
 
 	bot.getEvents().onCommand("alta", [&bot](TgBot::Message::Ptr message) {
+
+		ALTA = true;
+
 		JSON_FILE["id"] =  std::to_string(message->from->id);
 		bot.getApi().sendMessage(message->chat->id, "Nombre: " + message->from->firstName);
 		JSON_FILE["nombre"] =  message->from->firstName;
 		bot.getApi().sendMessage(message->chat->id, "Apellido: " + message->from->lastName);
 		JSON_FILE["apellido"] =  message->from->lastName;
-		std::ofstream file("clientes.json");
-		file << JSON_FILE;
+		bot.getApi().sendMessage(message->chat->id, "Dame tu direccion: ");
 	});
 
 	bot.getEvents().onCommand("menu", [&bot](TgBot::Message::Ptr message) {
@@ -51,8 +54,10 @@ int main() {
 
 	bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
 
-		if(usuario_nuevo) {
-
+		if(ALTA) {
+			JSON_FILE["direccion"] = message->text;
+			std::ofstream file("clientes.json");
+			file << JSON_FILE;
 		}
 
 		//printf("Id usuario: %s\n", (std::to_string(message->from->id).c_str()));
