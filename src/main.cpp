@@ -1,8 +1,14 @@
 #include <stdio.h>
 #include <tgbot/tgbot.h>
 #include <string>
+#include <nlohmann/json.hpp>
+#include <fstream>
 
-bool usuario_nuevo = false;
+using json = nlohmann::json;
+
+bool usuario_nuevo = true;
+bool orden_nueva = false;
+json json_file;
 
 int main() {
 	TgBot::Bot bot("1864266042:AAH-1fI-aLsGN78pWbBRmXYiyeOnV9Y86Rg");
@@ -19,10 +25,13 @@ int main() {
 	bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
 		if (usuario_nuevo) {
 			bot.getApi().sendMessage(message->chat->id, "Cual es tu nombre.");
+			json_file["foo"] = "bar";
+			std::ofstream file("key.json");
+			file << json_file;
 		} else {
 			bot.getApi().sendMessage(message->chat->id, "Hola *su nombre*.");
 		}
-		
+
 	});
 
 	bot.getEvents().onCommand("comida", [&bot](TgBot::Message::Ptr message) {
@@ -32,7 +41,11 @@ int main() {
 
 	bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
 
-		printf("Id usuario: %s\n", (std::to_string(message->from->id).c_str()));
+		if(usuario_nuevo) {
+
+		}
+
+		//printf("Id usuario: %s\n", (std::to_string(message->from->id).c_str()));
 		//Si el mensaje empieza con /start no devuvle el mensaje
 		//se sale de la funcion
 		if (StringTools::startsWith(message->text, "/start")) {

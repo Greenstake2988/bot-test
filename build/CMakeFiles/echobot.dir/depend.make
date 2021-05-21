@@ -40,6 +40,7 @@ CMakeFiles/echobot.dir/src/main.cpp.o: /usr/include/x86_64-linux-gnu/sys/select.
 CMakeFiles/echobot.dir/src/main.cpp.o: /usr/include/x86_64-linux-gnu/sys/socket.h
 CMakeFiles/echobot.dir/src/main.cpp.o: /usr/include/x86_64-linux-gnu/sys/time.h
 CMakeFiles/echobot.dir/src/main.cpp.o: /usr/include/x86_64-linux-gnu/sys/types.h
+CMakeFiles/echobot.dir/src/main.cpp.o: /usr/local/include/nlohmann/json.hpp
 CMakeFiles/echobot.dir/src/main.cpp.o: /usr/local/include/tgbot/Api.h
 CMakeFiles/echobot.dir/src/main.cpp.o: /usr/local/include/tgbot/Bot.h
 CMakeFiles/echobot.dir/src/main.cpp.o: /usr/local/include/tgbot/EventBroadcaster.h

@@ -41,6 +41,7 @@ CMakeFiles/echobot.dir/src/main.cpp.o
  /usr/include/x86_64-linux-gnu/sys/socket.h
  /usr/include/x86_64-linux-gnu/sys/time.h
  /usr/include/x86_64-linux-gnu/sys/types.h
+ /usr/local/include/nlohmann/json.hpp
  /usr/local/include/tgbot/Api.h
  /usr/local/include/tgbot/Bot.h
  /usr/local/include/tgbot/EventBroadcaster.h
