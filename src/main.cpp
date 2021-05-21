@@ -46,6 +46,8 @@ int main() {
 		json clientes_guardados;
 		open_file >> clientes_guardados;
 
+
+
 		//for (json::iterator i = clientes_guardados.begin(); i != clientes_guardados.end(); ++i) {}
 		if (clientes_guardados.contains(id_cliente)){
 			bot.getApi().sendMessage(message->chat->id, "ya estas dado de alta");
@@ -57,7 +59,7 @@ int main() {
 			std::ofstream file("key.json");
 			file << JSON_FILE;
 		} else {
-			bot.getApi().sendMessage(message->chat->id, "Hola " +  std::to_string(clientes_guardados["nombre"]));
+			bot.getApi().sendMessage(message->chat->id, "Hola " +  clientes_guardados["nombre"]);
 		}
 
 	});
