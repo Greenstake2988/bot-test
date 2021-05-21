@@ -40,7 +40,7 @@ int main() {
 		bot.getApi().sendMessage(message->chat->id, "*Despliega el menu...");
 	});
 
-	bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
+	/* bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
 
 		std::string id_cliente = std::to_string(message->from->id);
 		std::ifstream open_file("clientes.json");
@@ -55,11 +55,11 @@ int main() {
 		if (USUARIO_NUEVO) {
 			// aqui pasamos la funcion a /alta
 		} else {
-			//bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados["nombre"].get<std::string>());
+			bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados["nombre"].get<std::string>());
 			//printf("Hola: %s\n", clientes_guardados["nombre"].dump().c_str());
 		}
 
-	});
+	}); */
 
 	bot.getEvents().onCommand("comida", [&bot](TgBot::Message::Ptr message) {
 		bot.getApi().sendMessage(message->chat->id, "Que Quieres Comer?");
