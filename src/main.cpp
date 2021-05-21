@@ -21,7 +21,7 @@ int main() {
 
 	bot.getEvents().onCommand("alta", [&bot](TgBot::Message::Ptr message) {
 
-		ALTA = true;
+		NUEVA_ALTA = true;
 
 		JSON_FILE["id"] =  std::to_string(message->from->id);
 		bot.getApi().sendMessage(message->chat->id, "Nombre: " + message->from->firstName);
