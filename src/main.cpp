@@ -47,7 +47,7 @@ int main() {
 		bot.getApi().sendMessage(message->chat->id, "*Despliega el menu...");
 	});
 
-	/* bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
+	bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
 
 		std::string id_cliente = std::to_string(message->from->id);
 		std::ifstream open_file("clientes.json");
@@ -66,7 +66,7 @@ int main() {
 			//printf("Hola: %s\n", clientes_guardados["nombre"].dump().c_str());
 		}
 
-	}); */
+	});
 
 	bot.getEvents().onCommand("comida", [&bot](TgBot::Message::Ptr message) {
 		bot.getApi().sendMessage(message->chat->id, "Que Quieres Comer?");
