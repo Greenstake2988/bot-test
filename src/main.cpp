@@ -18,10 +18,10 @@ int main() {
 	//Aqui dependiendo del '/commando/ la funcion actua
 	bot.getEvents().onCommand("start", [&bot](TgBot::Message::Ptr message) {
 		//Mensaje de bienvenida
-			bot.getApi().sendMessage(message->chat->id, "Que desas hacer: \n"
-														"Menu: /menu\n"
-														"Ordenar : /ordenar\n"
-			);
+		bot.getApi().sendMessage(message->chat->id, "Que desas hacer: \n"
+													"Menu: /menu\n"
+													"Ordenar : /ordenar\n"
+		);
 	});
 
 	bot.getEvents().onCommand("alta", [&bot](TgBot::Message::Ptr message) {
@@ -55,7 +55,7 @@ int main() {
 		if (USUARIO_NUEVO) {
 			// aqui pasamos la funcion a /alta
 		} else {
-			bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados["nombre"].get<std::string>());
+			//bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados["nombre"].get<std::string>());
 			//printf("Hola: %s\n", clientes_guardados["nombre"].dump().c_str());
 		}
 
@@ -86,11 +86,6 @@ int main() {
 			
 			return;
 		}
-		//Esta es la funcion que devuvle el mensaje al chat
-		//bot.getApi().sendMessage(message->chat->id, "Tu mensaje es: " + message->text);
-		//std::to_string id = message->chat->id
-		//id_char = id.c_string()
-		//bot.getApi().sendMessage(message->chat->id,  "tu id es: " + std::to_string(message->chat->id));
 	});
 
 	try {
