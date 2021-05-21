@@ -15,7 +15,8 @@ int main() {
 
 	TgBot::Bot bot("1864266042:AAH-1fI-aLsGN78pWbBRmXYiyeOnV9Y86Rg");
 
-	printf(std::ofstream file("clientes.json").good());
+	//std::ofstream file("clientes.json");
+	printf(std::ifstream file("clientes.json").good());
 	//file << JSON_FILE;
 
 	//Aqui dependiendo del '/commando/ la funcion actua
