@@ -27,7 +27,7 @@ int main() {
 
 		NUEVA_ALTA = true;
 
-		JSON_FILE["id"] =  std::to_string(message->from->id);
+		JSON_FILE[std::to_string(message->from->id)] =  "id";
 		bot.getApi().sendMessage(message->chat->id, "Nombre: " + message->from->firstName);
 		JSON_FILE["nombre"] =  message->from->firstName;
 		bot.getApi().sendMessage(message->chat->id, "Apellido: " + message->from->lastName);
