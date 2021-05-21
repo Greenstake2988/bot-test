@@ -7,7 +7,7 @@
 using json = nlohmann::json;
 
 bool NUEVA_ALTA = false;
-bool usuario_nuevo = true;
+bool USUARIO_NUEVO = false;
 bool orden_nueva = false;
 json JSON_FILE;
 
@@ -40,13 +40,25 @@ int main() {
 	});
 
 	bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
-		if (usuario_nuevo) {
+
+		std::string id_cliente = std::to_string(message->from->id);
+		std::ifstream open_file("clientes.json");
+		json clientes_guardados;
+		open_file >> clientes_guardados;
+
+		for (json::iterator i = clientes_guardados.begin(); i != clientes_guardados.end(); ++i) {
+			if (i.contains(id_cliente)){
+				bot.getApi().sendMessage(message->chat->id, "ya estas dado de alta");
+			}
+		}
+
+		if (USUARIO_NUEVO) {
 			bot.getApi().sendMessage(message->chat->id, "Cual es tu nombre.");
 			JSON_FILE["foo"] = "bar";
 			std::ofstream file("key.json");
 			file << JSON_FILE;
 		} else {
-			bot.getApi().sendMessage(message->chat->id, "Hola *su nombre*.");
+			bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados[]);
 		}
 
 	});
@@ -66,8 +78,6 @@ int main() {
 			bot.getApi().sendMessage(message->chat->id, "Tus datos han sido guardados:");
 			NUEVA_ALTA = false;
 		}
-
-		
 
 		//printf("Id usuario: %s\n", (std::to_string(message->from->id).c_str()));
 		//Si el mensaje empieza con /start no devuvle el mensaje
