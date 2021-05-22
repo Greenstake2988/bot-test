@@ -6,14 +6,17 @@
 
 using json = nlohmann::json;
 
+//Un flag para poder pasar los datos
+//a la funcion anyMessage
 bool NUEVA_ALTA = false;
-bool orden_nueva = false;
 json JSON_FILE;
 
 int main() {
 
+	//Direccion unica del bot @Green_88bot
 	TgBot::Bot bot("1864266042:AAH-1fI-aLsGN78pWbBRmXYiyeOnV9Y86Rg");
 
+	//Checamos que la base de datos existe de lo contrario la creamos.
 	std::ifstream clientes_guardados("clientes.json");
 	if(not clientes_guardados.good()){
 		std::ofstream clientes_guardados("clientes.json");
@@ -57,17 +60,14 @@ int main() {
 		//Le sugerimos /alta
 		//De lo contrario lo saludamos
 		if (not clientes_guardados.contains(id_cliente)){
-			bot.getApi().sendMessage(message->chat->id, "Eres un cliente nuevo presiona /alta para guardar tu contacto.");
+			bot.getApi().sendMessage(message->chat->id, "Eres un cliente nuevo \n"
+														"presiona /alta para guardar tu contacto.");
 		} else {
 			//Checamos que el nombre del cliente no este vacio.
 			if(not clientes_guardados[std::to_string(message->from->id)]["nombre"].empty()) {
 				bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados[std::to_string(message->from->id)]["nombre"].get<std::string>());
 			}
 		}
-	});
-
-	bot.getEvents().onCommand("comida", [&bot](TgBot::Message::Ptr message) {
-		bot.getApi().sendMessage(message->chat->id, "Que Quieres Comer?");
 	});
 
 	//Por aqui pasan todos los mensajes
