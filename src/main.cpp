@@ -129,7 +129,7 @@ int main() {
 					return;
 				}
 	
-				//NUEVOS_TACOS.num_tacos = std::stoi(message->text);
+				NUEVOS_TACOS.num_tacos = std::stoi(message->text);
 				bot.getApi().sendMessage(message->chat->id, "Con Chicharra? ");
 				ELIGIENDO_CHICHARRA = true;
 		
