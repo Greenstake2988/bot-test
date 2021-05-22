@@ -81,7 +81,7 @@ int main() {
 		if(NUEVA_ORDEN) {
 			bot.getApi().sendMessage(message->chat->id, "Cuantos tacos quieres");
 		}
-	}
+	});
 
 
 	//Por aqui pasan todos los mensajes
