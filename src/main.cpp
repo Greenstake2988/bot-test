@@ -65,7 +65,10 @@ int main() {
 		} else {
 			//Checamos que el nombre del cliente no este vacio.
 			if(not clientes_guardados[std::to_string(message->from->id)]["nombre"].empty()) {
-				bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados[std::to_string(message->from->id)]["nombre"].get<std::string>());
+				bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados[std::to_string(message->from->id)]["nombre"].get<std::string>() + "Que deseas ordenar\n"
+												            "/1 Tacos\n"
+															"/2 Tortas\n"
+															);
 			}
 		}
 	});
