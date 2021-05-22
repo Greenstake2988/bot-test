@@ -14,7 +14,7 @@ bool ORDENANDO_TACOS = false;
 bool ELIGIENDO_CHICHARRA = false;
 json JSON_FILE;
 
-Tacos NUEVOS_TACOS;
+
 
 struct Tacos
 {
@@ -24,6 +24,7 @@ struct Tacos
 	bool especial = false;
 };
 
+Tacos NUEVOS_TACOS;
 
 int main() {
 
