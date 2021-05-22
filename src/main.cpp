@@ -110,7 +110,7 @@ int main() {
 		if(NUEVA_ORDEN) {
 			if(ORDENANDO_TACOS) {
 				Tacos nuevos_tacos;
-				nuevos_tacos.num_tacos = std::to_integer(message->text);
+				nuevos_tacos.num_tacos = std::stoi(message->text);
 				bot.getApi().sendMessage(message->chat->id, "Con Chicharra? ");
 				if(message->text == "si"){
 					nuevos_tacos.con_chicharra = true;
