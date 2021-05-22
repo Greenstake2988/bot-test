@@ -11,7 +11,10 @@ using json = nlohmann::json;
 bool NUEVA_ALTA = false;
 bool NUEVA_ORDEN = false;
 bool ORDENANDO_TACOS = false;
+bool ELIGIENDO_CHICHARRA = false;
 json JSON_FILE;
+
+Tacos NUEVOS_TACOS;
 
 struct Tacos
 {
@@ -109,16 +112,19 @@ int main() {
 
 		if(NUEVA_ORDEN) {
 			if(ORDENANDO_TACOS) {
-				Tacos nuevos_tacos;
-				nuevos_tacos.num_tacos = std::stoi(message->text);
+				if(ELIGIENDO_CHICHARRA){
+					if(message->text == "si"){
+						NUEVOS_TACOS.con_chicharra = true;
+						bot.getApi().sendMessage(message->chat->id, "Pediste " + NUEVOS_TACOS.num_tacos + "con chicharra.");
+					} else {
+						bot.getApi().sendMessage(message->chat->id, "Pediste " + NUEVOS_TACOS.num_tacos + "sin chicharra.");
+					}
+				}
+	
+				NUEVOS_TACOS.num_tacos = std::stoi(message->text);
 				bot.getApi().sendMessage(message->chat->id, "Con Chicharra? ");
-				if(message->text == "si"){
-					nuevos_tacos.con_chicharra = true;
-				}
-				bot.getApi().sendMessage(message->chat->id, "Pediste: " + std::to_string(nuevos_tacos.num_tacos));
-				if(nuevos_tacos.con_chicharra){
-					bot.getApi().sendMessage(message->chat->id, " con chicharra");
-				}
+				ELIGIENDO_CHICHARRA = true;
+		
 			}
 		}
 
