@@ -11,7 +11,6 @@ using json = nlohmann::json;
 bool NUEVA_ALTA = false;
 bool NUEVA_ORDEN = false;
 bool ORDENANDO_TACOS = false;
-bool ELIGIENDO_CHICHARRA = false;
 json JSON_FILE;
 
 
@@ -81,9 +80,10 @@ int main() {
 			//Checamos que el nombre del cliente no este vacio.
 			if(not clientes_guardados[std::to_string(message->from->id)]["nombre"].empty()) {
 				bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados[std::to_string(message->from->id)]["nombre"].get<std::string>() + " que deseas ordenar\n"
-												            "/1 Tacos\n"
-															"/2 Tortas\n"
-															"/3 Orden\n"
+												            "MAIZ                  COMMANDO    PRECIO\n"
+															"TACOS DE ASADO         /tma       $13\n"
+															"TACOS CON CHICHARRA    /tmc       $14\n"
+															"ESPECIALES             /tme       $15\n"
 															);
 			}
 
@@ -115,23 +115,6 @@ int main() {
 
 		if(NUEVA_ORDEN) {
 			if(ORDENANDO_TACOS) {
-				if(ELIGIENDO_CHICHARRA){
-					if(message->text == "si"){
-						NUEVOS_TACOS.con_chicharra = true;
-						bot.getApi().sendMessage(message->chat->id, "Pediste " + std::to_string(NUEVOS_TACOS.num_tacos) + " con chicharra.");
-					} else {
-						bot.getApi().sendMessage(message->chat->id, "Pediste " + std::to_string(NUEVOS_TACOS.num_tacos) + " sin chicharra.");
-					}
-
-					ELIGIENDO_CHICHARRA = false;
-					ORDENANDO_TACOS = false;
-					NUEVA_ORDEN = false;
-					return;
-				}
-	
-				NUEVOS_TACOS.num_tacos = std::stoi(message->text);
-				bot.getApi().sendMessage(message->chat->id, "Con Chicharra? ");
-				ELIGIENDO_CHICHARRA = true;
 		
 			}
 		}
