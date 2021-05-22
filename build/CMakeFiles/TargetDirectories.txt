@@ -1,3 +1,0 @@
-/home/oscar/bot-test/build/CMakeFiles/rebuild_cache.dir
-/home/oscar/bot-test/build/CMakeFiles/echobot.dir
-/home/oscar/bot-test/build/CMakeFiles/edit_cache.dir
