@@ -79,11 +79,11 @@ int main() {
 		} else {
 			//Checamos que el nombre del cliente no este vacio.
 			if(not clientes_guardados[std::to_string(message->from->id)]["nombre"].empty()) {
-				bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados[std::to_string(message->from->id)]["nombre"].get<std::string>() + " que deseas ordenar\n"
-												            "MAIZ                  COMMANDO    PRECIO\n"
-															"TACOS DE ASADO         /tma       $13\n"
-															"TACOS CON CHICHARRA    /tmc       $14\n"
-															"ESPECIALES             /tme       $15\n"
+				bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados[std::to_string(message->from->id)]["nombre"].get<std::string>() + " que deseas ordenar:\n"
+												            "Maiz               Commando    Precio\n"
+															"Tacos de asado       /tma       $13\n"
+															"Tacos con chicharra  /tmc       $14\n"
+															"Especiales           /tme       $15\n"
 															);
 			}
 
