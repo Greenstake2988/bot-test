@@ -9,6 +9,7 @@ using json = nlohmann::json;
 //Un flag para poder pasar los datos
 //a la funcion anyMessage
 bool NUEVA_ALTA = false;
+bool NUEVA_ORDEN = false;
 json JSON_FILE;
 
 int main() {
@@ -68,10 +69,20 @@ int main() {
 				bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados[std::to_string(message->from->id)]["nombre"].get<std::string>() + "Que deseas ordenar\n"
 												            "/1 Tacos\n"
 															"/2 Tortas\n"
+															"/3 Orden\n"
 															);
 			}
+
+			NUEVA_ORDEN = true;
 		}
 	});
+
+	bot.getEvents().onCommand("1", [&bot](TgBot::Message::Ptr message) {
+		if(NUEVA_ORDEN) {
+			bot.getApi().sendMessage(message->chat->id, "Cuantos tacos quieres");
+		}
+	}
+
 
 	//Por aqui pasan todos los mensajes
 	bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
