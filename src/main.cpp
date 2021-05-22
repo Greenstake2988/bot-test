@@ -102,8 +102,6 @@ int main() {
 	//Por aqui pasan todos los mensajes
 	bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
 
-		printf((std::to_string(ELIGIENDO_CHICHARRA)).c_str());
-
 		if(NUEVA_ALTA) {
 			bot.getApi().sendMessage(message->chat->id, "Direccion: " + message->text);
 			JSON_FILE[std::to_string(message->from->id)]["direccion"] = message->text;
