@@ -13,7 +13,7 @@ bool NUEVA_ORDEN = false;
 bool ORDENANDO_TACOS = false;
 json JSON_FILE;
 
-class Tacos
+struct Tacos
 {
 	int num_tacos = 0;
 	bool sin_cebolla = false;
