@@ -7,7 +7,6 @@
 using json = nlohmann::json;
 
 bool NUEVA_ALTA = false;
-bool USUARIO_NUEVO = false;
 bool orden_nueva = false;
 json JSON_FILE;
 
@@ -20,7 +19,6 @@ int main() {
 		std::ofstream clientes_guardados("clientes.json");
 		clientes_guardados << "[]";
 	}
-	//file << JSON_FILE;
 
 	//Aqui dependiendo del '/commando/ la funcion actua
 	bot.getEvents().onCommand("start", [&bot](TgBot::Message::Ptr message) {
@@ -32,40 +30,39 @@ int main() {
 	});
 
 	bot.getEvents().onCommand("alta", [&bot](TgBot::Message::Ptr message) {
-
+		
 		NUEVA_ALTA = true;
-
+		//Emepezamos a Guardar los datos del contacto
 		bot.getApi().sendMessage(message->chat->id, "Nombre: " + message->from->firstName);
 		JSON_FILE[std::to_string(message->from->id)]["nombre"] =  message->from->firstName;
 		bot.getApi().sendMessage(message->chat->id, "Apellido: " + message->from->lastName);
 		JSON_FILE[std::to_string(message->from->id)]["apellido"] =  message->from->lastName;
 		bot.getApi().sendMessage(message->chat->id, "Dame tu direccion: ");
+
 	});
 
 	bot.getEvents().onCommand("menu", [&bot](TgBot::Message::Ptr message) {
+		//Desplegamos el Menu
 		bot.getApi().sendMessage(message->chat->id, "*Despliega el menu...");
 	});
 
 	bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
-
-		//Checamos primero si el cliente existe en clientes_guardados.
+		//Abrimos el archivo clientes_guardados
 		std::string id_cliente = std::to_string(message->from->id);
 		std::ifstream open_file("clientes.json");
 		json clientes_guardados;
 		open_file >> clientes_guardados;
 
-		//for (json::iterator i = clientes_guardados.begin(); i != clientes_guardados.end(); ++i) {}
 		//Si el id de cliente no esta dentro de nuestros id's.
+		//Le sugerimos /alta
+		//De lo contrario lo saludamos
 		if (not clientes_guardados.contains(id_cliente)){
-			bot.getApi().sendMessage(message->chat->id, "Presiona: /alta");
-		}
-		if (USUARIO_NUEVO) {
-			// aqui pasamos la funcion a /alta
+			bot.getApi().sendMessage(message->chat->id, "Eres un cliente nuevo presiona /alta para guardar tu contacto.");
 		} else {
+			//Checamos que el nombre del cliente no este vacio.
 			if(not clientes_guardados[std::to_string(message->from->id)]["nombre"].empty()) {
 				bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados[std::to_string(message->from->id)]["nombre"].get<std::string>());
 			}
-			//printf("Hola: %s\n", clientes_guardados["nombre"].dump().c_str());
 		}
 	});
 
@@ -73,9 +70,7 @@ int main() {
 		bot.getApi().sendMessage(message->chat->id, "Que Quieres Comer?");
 	});
 
-
-
-
+	//Por aqui pasan todos los mensajes
 	bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
 
 		if(NUEVA_ALTA) {
@@ -87,25 +82,21 @@ int main() {
 			NUEVA_ALTA = false;
 		}
 
-		//printf("Id usuario: %s\n", (std::to_string(message->from->id).c_str()));
-		//Si el mensaje empieza con /start no devuvle el mensaje
-		//se sale de la funcion
+		//Ejemplo de comparador de texto
 		if (StringTools::startsWith(message->text, "/start")) {
-			
 			return;
 		}
 	});
 
 	try {
-		//Esta orden se efecuta una vez
+		//Imprimos el nombre del bot en la consola
 		printf("Bot username: %s\n", bot.getApi().getMe()->username.c_str());
-		//printf("User username: %s
 		TgBot::TgLongPoll longPoll(bot);
+
 		//Este esl Bucle infinito que espera los eventos
 		// y actua de acuero a ellos
 		while (true) {
 			printf("Long poll started\n");
-			//printf();
 		  	longPoll.start();
 		}
 	} catch (TgBot::TgException& e) {
