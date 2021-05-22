@@ -126,6 +126,7 @@ int main() {
 					ELIGIENDO_CHICHARRA = false;
 					ORDENANDO_TACOS = false;
 					NUEVA_ORDEN = false;
+					return;
 				}
 	
 				//NUEVOS_TACOS.num_tacos = std::stoi(message->text);
