@@ -116,9 +116,9 @@ int main() {
 				if(ELIGIENDO_CHICHARRA){
 					if(message->text == "si"){
 						NUEVOS_TACOS.con_chicharra = true;
-						bot.getApi().sendMessage(message->chat->id, "Pediste " + NUEVOS_TACOS.num_tacos + "con chicharra.");
+						bot.getApi().sendMessage(message->chat->id, "Pediste " + std::to_string(NUEVOS_TACOS.num_tacos) + "con chicharra.");
 					} else {
-						bot.getApi().sendMessage(message->chat->id, "Pediste " + NUEVOS_TACOS.num_tacos + "sin chicharra.");
+						bot.getApi().sendMessage(message->chat->id, "Pediste " + std::to_string(NUEVOS_TACOS.num_tacos) + "sin chicharra.");
 					}
 				}
 	
