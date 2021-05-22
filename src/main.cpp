@@ -10,7 +10,17 @@ using json = nlohmann::json;
 //a la funcion anyMessage
 bool NUEVA_ALTA = false;
 bool NUEVA_ORDEN = false;
+bool ORDENANDO_TACOS = false;
 json JSON_FILE;
+
+class Tacos
+{
+	int num_tacos = 0;
+	bool sin_cebolla = false;
+	bool con_chicharra = false;
+	bool especial = false;
+};
+
 
 int main() {
 
@@ -66,7 +76,7 @@ int main() {
 		} else {
 			//Checamos que el nombre del cliente no este vacio.
 			if(not clientes_guardados[std::to_string(message->from->id)]["nombre"].empty()) {
-				bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados[std::to_string(message->from->id)]["nombre"].get<std::string>() + "Que deseas ordenar\n"
+				bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados[std::to_string(message->from->id)]["nombre"].get<std::string>() + " que deseas ordenar\n"
 												            "/1 Tacos\n"
 															"/2 Tortas\n"
 															"/3 Orden\n"
@@ -80,6 +90,7 @@ int main() {
 	bot.getEvents().onCommand("1", [&bot](TgBot::Message::Ptr message) {
 		if(NUEVA_ORDEN) {
 			bot.getApi().sendMessage(message->chat->id, "Cuantos tacos quieres");
+			ORDENANDO_TACOS = true;
 		}
 	});
 
@@ -94,6 +105,21 @@ int main() {
 			file << JSON_FILE;
 			bot.getApi().sendMessage(message->chat->id, "Tus datos han sido guardados:");
 			NUEVA_ALTA = false;
+		}
+
+		if(NUEVA_ORDEN) {
+			if(ORDENANDO_TACOS) {
+				Tacos nuevos_tacos;
+				nuevos_tacos.num_tacos = std::to_integer(message->text);
+				bot.getApi().sendMessage(message->chat->id, "Con Chicharra? ");
+				if(message->text == "si"){
+					nuevos_tacos.con_chicharra = true;
+				}
+				bot.getApi().sendMessage(message->chat->id, "Pediste: " + std::to_string(nuevos_tacos.num_tacos));
+				if(nuevos_tacos.con_chicharra){
+					bot.getApi().sendMessage(message->chat->id, " con chicharra");
+				}
+			}
 		}
 
 		//Ejemplo de comparador de texto
