@@ -235,13 +235,13 @@ int main() {
 		//Continuacion del /alta
 		if(clientes_guardados[id_cliente_str]["continuacion_alta"].get<bool>()) {
 			bot.getApi().sendMessage(message->chat->id, "Direccion: " + message->text);
-			clientes_guardados[id_cliente_str)]["direccion"] = message->text;
+			clientes_guardados[id_cliente_str]["direccion"] = message->text;
 
 
 			//Cerramos el Alta
 			clientes_guardados[id_cliente_str]["continuacion_alta"] = false;
 			//Creamos la bandera orden activa
-			clientes_guardados[id_cliente_str)]["orden"]["activa"]= false;
+			clientes_guardados[id_cliente_str]["orden"]["activa"]= false;
 			//Guardamos la informacion en la base de datos de clientes.
 			escribirClientes(clientes_guardados);
 
