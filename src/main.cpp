@@ -77,7 +77,7 @@ int main() {
 
 		bot.getApi().sendMessage(message->chat->id, "Se agrego 1 taco de maiz de asado.");
 
-		JSON_FILE[std::to_string(message->from->id)]["orden"]["tma"] = std::stoi([std::to_string(message->from->id)]["orden"]["tma"]) + 1;
+		JSON_FILE[std::to_string(message->from->id)]["orden"]["tma"] = JSON_FILE[std::to_string(message->from->id)]["orden"]["tma"]).get(int) + 1;
 
 		std::ofstream file("clientes.json");
 		file << JSON_FILE;
