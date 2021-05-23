@@ -221,7 +221,7 @@ int main() {
 			cliente_guardado["orden"]["activa"]= true;
 
 			//Guardamos la informacion en la base de datos de clientes.
-			escribirCliente(cliente_guardados);
+			escribirCliente(cliente_guardado);
 		}
 	});
 
