@@ -77,7 +77,7 @@ int main() {
 
 		
 
-		if(clientes_guardados[std::to_string(message->from->id)]["orden"]["tma"].get<int>()){
+		if(clientes_guardados[std::to_string(message->from->id)]["orden"]["tma"].is_null()){
 			JSON_FILE[std::to_string(message->from->id)]["orden"]["tma"] =  1;
 		} else {
 			JSON_FILE[std::to_string(message->from->id)]["orden"]["tma"] = clientes_guardados[std::to_string(message->from->id)]["orden"]["tma"].get<int>() + 1;
