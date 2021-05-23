@@ -22,7 +22,7 @@ struct Orden
 	int num_tmc = 0;
 	//Taco Maiz Especial
 	int num_tme = 0;
-	bool sin_cebolla = false;
+	bool orden_activa = false;
 	bool con_chicharra = false;
 };
 
@@ -67,25 +67,36 @@ int main() {
 		bot.getApi().sendMessage(message->chat->id, "*Despliega el menu...");
 	});
 
-	//Taco Maiz Asado
+	//Pedir Taco Maiz Asado
 	bot.getEvents().onCommand("tma", [&bot](TgBot::Message::Ptr message) {
+		//Abrimos el archivo clientes_guardados
+		std::string id_cliente = std::to_string(message->from->id);
+		std::ifstream open_file("clientes.json");
+		json clientes_guardados;
+		open_file >> clientes_guardados;
+
 		bot.getApi().sendMessage(message->chat->id, "Se agrego 1 taco de maiz de asado.");
-		nueva_orden.num_tma += 1;
+
+		JSON_FILE[std::to_string(message->from->id)]["orden"]["tma"] = std::stoi([std::to_string(message->from->id)]["orden"]["tma"]) + 1;
+
+		std::ofstream file("clientes.json");
+		file << JSON_FILE;
+		
 	});
 
-	//Taco Maiz Con Chicharra
+	//Pedir Taco Maiz Con Chicharra
 	bot.getEvents().onCommand("tmc", [&bot](TgBot::Message::Ptr message) {
 		bot.getApi().sendMessage(message->chat->id, "Se agrego 1 taco de maiz con chicharra.");
 		nueva_orden.num_tmc += 1;
 	});
 
-	//Taco Maiz Especial
+	//Pedir Taco Maiz Especial
 	bot.getEvents().onCommand("tme", [&bot](TgBot::Message::Ptr message) {
 		bot.getApi().sendMessage(message->chat->id, "Se agrego 1 taco de maiz especial.");
 		nueva_orden.num_tme += 1;
 	});
 
-	//Taco Maiz Especial
+	//Resumen del Pedido
 	bot.getEvents().onCommand("resumen", [&bot](TgBot::Message::Ptr message) {
 		if(nueva_orden.num_tma) bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.num_tma) + " Tacos de maiz de asado");
 		if(nueva_orden.num_tmc) bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.num_tmc) + " Tacos de maiz con chicharra");
@@ -113,6 +124,7 @@ int main() {
 															"Tacos de asado         $13 /tma\n"+
 															"Tacos con chicharra $14 /tmc\n"+
 															"Especiales                  $15 /tme\n"
+															"Presiona /resumen para tener el resumen de tu pedido."
 															);
 			}
 
