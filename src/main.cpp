@@ -77,22 +77,22 @@ int main() {
 	//Pedir Taco Maiz Asado
 	bot.getEvents().onCommand("tma", [&bot](TgBot::Message::Ptr message) {
 
-		//Sacamos el id_cliente de la variable
-		std::string id_cliente = std::to_string(message->from->id);
+		//Sacamos el id_cliente_str de la variable
+		std::string id_cliente_str = std::to_string(message->from->id);
 
 		//Llamamos al funcion para copiar la base de datos de clientes
 		json clientes_guardados = copiaClientes();
 
-		if(clientes_guardados[id_cliente]["orden"]["tma"].is_null()){
-			CLIENTES_JSON[id_cliente]["orden"]["tma"] =  1;
+		if(clientes_guardados[id_cliente_str]["orden"]["tma"].is_null()){
+			CLIENTES_JSON[id_cliente_str]["orden"]["tma"] =  1;
 		} else {
-			CLIENTES_JSON[id_cliente]["orden"]["tma"] = clientes_guardados[id_cliente]["orden"]["tma"].get<int>() + 1;
+			CLIENTES_JSON[id_cliente_str]["orden"]["tma"] = clientes_guardados[id_cliente_str]["orden"]["tma"].get<int>() + 1;
 		}
 
 		//Guardamos la informacion en la base de datos de clientes.
 		escribirClientes(CLIENTES_JSON);
 
-		bot.getApi().sendMessage(id_cliente, "Se agrego 1 taco de maiz de asado.");
+		bot.getApi().sendMessage(message->from->id, "Se agrego 1 taco de maiz de asado.");
 
 	});
 
@@ -117,8 +117,8 @@ int main() {
 
 	bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
 
-		//Sacamos el id_cliente de la variable
-		std::string id_cliente = std::to_string(message->from->id);
+		//Sacamos el id_cliente_str de la variable
+		std::string id_cliente_str = std::to_string(message->from->id);
 
 		//Llamamos al funcion para copiar la base de datos de clientes
 		json clientes_guardados = copiaClientes();
@@ -126,13 +126,13 @@ int main() {
 		//Si el id de cliente no esta dentro de nuestros id's.
 		//Le sugerimos /alta
 		//De lo contrario lo saludamos
-		if (not clientes_guardados.contains(id_cliente)){
-			bot.getApi().sendMessage(id_cliente, "Eres un cliente nuevo \n"
+		if (not clientes_guardados.contains(id_cliente_str)){
+			bot.getApi().sendMessage(message->from->id, "Eres un cliente nuevo \n"
 														"presiona /alta para guardar tu contacto.");
 		} else {
 			//Checamos que el nombre del cliente no este vacio.
-			if(not clientes_guardados[id_cliente]["nombre"].empty()) {
-				bot.getApi().sendMessage(id_cliente, "Hola " + clientes_guardados[std::to_string(message->from->id)]["nombre"].get<std::string>() + " que deseas ordenar:\n"+
+			if(not clientes_guardados[id_cliente_str]["nombre"].empty()) {
+				bot.getApi().sendMessage(message->from->id, "Hola " + clientes_guardados[id_cliente_str]["nombre"].get<std::string>() + " que deseas ordenar:\n"+
 												            "Maiz                              Precio\n"
 															"Tacos de asado         $13 /tma\n"+
 															"Tacos con chicharra $14 /tmc\n"+
