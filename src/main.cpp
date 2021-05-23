@@ -55,22 +55,25 @@ int main() {
 
 	bot.getEvents().onCommand("alta", [&bot](TgBot::Message::Ptr message) {
 		
-		//Llamamos al funcion para copiar la base de datos de clientes
-		json clientes_guardados = copiaClientes();
+		//Sacamos el id_cliente_str de la variable
+		string id_cliente_str = to_string(message->from->id);
+
+		//Creamos un nuevo cliente
+		json cliente_nuevo;
 
 		//Emepezamos a Guardar los datos del contacto
 		bot.getApi().sendMessage(message->chat->id, "Nombre: " + message->from->firstName);
-		clientes_guardados[to_string(message->from->id)]["nombre"] =  message->from->firstName;
+		cliente_nuevo[id_cliente_str)]["nombre"] =  message->from->firstName;
 
 		bot.getApi().sendMessage(message->chat->id, "Apellido: " + message->from->lastName);
-		clientes_guardados[to_string(message->from->id)]["apellido"] =  message->from->lastName;
+		cliente_nuevo[id_cliente_str]["apellido"] =  message->from->lastName;
 
 		bot.getApi().sendMessage(message->chat->id, "Dame tu direccion: ");
 
-		clientes_guardados[to_string(message->from->id)]["continuacion_alta"] =  true;
+		cliente_nuevo[id_cliente_str)]["continuacion_alta"] =  true;
 
 		//Guardamos la informacion en la base de datos de clientes.
-		escribirCliente(clientes_guardados);
+		escribirCliente(id_cliente_str, cliente_nuevo);
 
 	});
 
@@ -105,7 +108,7 @@ int main() {
 		}
 
 		//Guardamos la informacion en la base de datos de clientes.
-		escribirCliente(cliente_guardado);
+		escribirCliente(id_cliente_str, cliente_guardado);
 
 		bot.getApi().sendMessage(message->from->id, "Se agrego 1 taco de maiz de asado.");
 
@@ -132,7 +135,7 @@ int main() {
 		}
 
 		//Guardamos la informacion en la base de datos de clientes.
-		escribirCliente(cliente_guardado);
+		escribirCliente(id_cliente_str, cliente_guardado);
 
 		bot.getApi().sendMessage(message->from->id, "Se agrego 1 taco de maiz con chicharra.");
 	});
@@ -158,7 +161,7 @@ int main() {
 		}
 
 		//Guardamos la informacion en la base de datos de clientes.
-		escribirCliente(cliente_guardado);
+		escribirCliente(id_cliente_str, cliente_guardado);
 
 		bot.getApi().sendMessage(message->from->id, "Se agrego 1 taco de maiz especial.");
 	});
@@ -223,7 +226,7 @@ int main() {
 			cliente_guardado["orden"]["activa"]= true;
 
 			//Guardamos la informacion en la base de datos de clientes.
-			escribirCliente(cliente_guardado);
+			escribirCliente(id_cliente_str, cliente_guardado);
 		}
 	});
 
@@ -248,7 +251,7 @@ int main() {
 			//Creamos la bandera orden activa
 			cliente_guardado["orden"]["activa"]= false;
 			//Guardamos la informacion en la base de datos de clientes.
-			escribirCliente(cliente_guardado);
+			escribirCliente(id_cliente_str, cliente_guardado);
 
 			bot.getApi().sendMessage(message->chat->id, "Tus datos han sido guardados:");
 		}
