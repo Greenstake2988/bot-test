@@ -290,7 +290,7 @@ json copiaClientes(){
 }
 
 json copiaCliente(string id_cliente){
-	//json copiaClientes = copiaClientes();
+	json copiaClientes ///= copiaClientes();
 	return copiaClientes[id_cliente];
 }
 
