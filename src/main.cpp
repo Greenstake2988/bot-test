@@ -11,7 +11,7 @@ using json = nlohmann::json;
 bool CONTINUACION_ALTA = false;
 bool NUEVA_ORDEN = false;
 bool ORDENANDO_TACOS = false;
-json CLIENTES_JSON;
+//json CLIENTES_JSON;
 
 
 json copiaClientes();
@@ -55,17 +55,20 @@ int main() {
 	});
 
 	bot.getEvents().onCommand("alta", [&bot](TgBot::Message::Ptr message) {
-	
+		
+		//Llamamos al funcion para copiar la base de datos de clientes
+		json clientes_guardados = copiaClientes();
+
 		CONTINUACION_ALTA = true;
 		//Emepezamos a Guardar los datos del contacto
 		bot.getApi().sendMessage(message->chat->id, "Nombre: " + message->from->firstName);
-		CLIENTES_JSON[std::to_string(message->from->id)]["nombre"] =  message->from->firstName;
+		clientes_guardados[std::to_string(message->from->id)]["nombre"] =  message->from->firstName;
 		bot.getApi().sendMessage(message->chat->id, "Apellido: " + message->from->lastName);
-		CLIENTES_JSON[std::to_string(message->from->id)]["apellido"] =  message->from->lastName;
+		clientes_guardados[std::to_string(message->from->id)]["apellido"] =  message->from->lastName;
 		bot.getApi().sendMessage(message->chat->id, "Dame tu direccion: ");
 
 		//Guardamos la informacion en la base de datos de clientes.
-		escribirClientes(CLIENTES_JSON);
+		escribirClientes(clientes_guardados);
 
 	});
 
@@ -149,13 +152,16 @@ int main() {
 	//Por aqui pasan todos los mensajes
 	bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
 
+		//Llamamos al funcion para copiar la base de datos de clientes
+		json clientes_guardados = copiaClientes();
+
 		//Continuacion del /alta
 		if(CONTINUACION_ALTA) {
 			bot.getApi().sendMessage(message->chat->id, "Direccion: " + message->text);
-			CLIENTES_JSON[std::to_string(message->from->id)]["direccion"] = message->text;
+			clientes_guardados[std::to_string(message->from->id)]["direccion"] = message->text;
 
 			//Guardamos la informacion en la base de datos de clientes.
-			escribirClientes(CLIENTES_JSON);
+			escribirClientes(clientes_guardados);
 
 			bot.getApi().sendMessage(message->chat->id, "Tus datos han sido guardados:");
 			CONTINUACION_ALTA = false;
