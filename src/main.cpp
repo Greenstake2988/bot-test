@@ -26,9 +26,11 @@ struct Orden
 	bool con_chicharra = false;
 };
 
+Orden nueva_orden;
+
 int main() {
 
-	Orden nueva_orden;
+	
 	//Direccion unica del bot @Green_88bot
 	TgBot::Bot bot("1864266042:AAH-1fI-aLsGN78pWbBRmXYiyeOnV9Y86Rg");
 
