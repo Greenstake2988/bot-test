@@ -8,8 +8,6 @@ using json = nlohmann::json;
 
 //Un flag para poder pasar los datos
 //a la funcion anyMessage
-bool CONTINUACION_ALTA = false;
-bool ORDEN_ACTIVA = false;
 bool ORDENANDO_TACOS = false;
 //json CLIENTES_JSON;
 
@@ -58,13 +56,16 @@ int main() {
 		//Llamamos al funcion para copiar la base de datos de clientes
 		json clientes_guardados = copiaClientes();
 
-		CONTINUACION_ALTA = true;
 		//Emepezamos a Guardar los datos del contacto
 		bot.getApi().sendMessage(message->chat->id, "Nombre: " + message->from->firstName);
 		clientes_guardados[std::to_string(message->from->id)]["nombre"] =  message->from->firstName;
+
 		bot.getApi().sendMessage(message->chat->id, "Apellido: " + message->from->lastName);
 		clientes_guardados[std::to_string(message->from->id)]["apellido"] =  message->from->lastName;
+
 		bot.getApi().sendMessage(message->chat->id, "Dame tu direccion: ");
+
+		clientes_guardados[std::to_string(message->from->id)]["continuacion_alta"] =  true;
 
 		//Guardamos la informacion en la base de datos de clientes.
 		escribirClientes(clientes_guardados);
@@ -84,16 +85,16 @@ int main() {
 	//Pedir Taco Maiz Asado
 	bot.getEvents().onCommand("tma", [&bot](TgBot::Message::Ptr message) {
 
-		//Si no hay orden activa nos salimos
-		if(not ORDEN_ACTIVA) {
-			return;
-		}
-
 		//Sacamos el id_cliente_str de la variable
 		std::string id_cliente_str = std::to_string(message->from->id);
 
 		//Llamamos al funcion para copiar la base de datos de clientes
 		json clientes_guardados = copiaClientes();
+
+		//Si no hay orden activa nos salimos
+		if(not clientes_guardados[id_cliente_str)]["orden"]["activa"].get<bool>()) {
+			return;
+		}
 
 		if(clientes_guardados[id_cliente_str]["orden"]["tma"].is_null()){
 			clientes_guardados[id_cliente_str]["orden"]["tma"] =  1;
@@ -111,16 +112,16 @@ int main() {
 	//Pedir Taco Maiz Con Chicharra
 	bot.getEvents().onCommand("tmc", [&bot](TgBot::Message::Ptr message) {
 
-		//Si no hay orden activa nos salimos
-		if(not ORDEN_ACTIVA) {
-			return;
-		}
-
 		//Sacamos el id_cliente_str de la variable
 		std::string id_cliente_str = std::to_string(message->from->id);
 
 		//Llamamos al funcion para copiar la base de datos de clientes
 		json clientes_guardados = copiaClientes();
+
+		//Si no hay orden activa nos salimos
+		if(not clientes_guardados[id_cliente_str)]["orden"]["activa"].get<bool>()) {
+			return;
+		}
 
 		if(clientes_guardados[id_cliente_str]["orden"]["tmc"].is_null()){
 			clientes_guardados[id_cliente_str]["orden"]["tmc"] =  1;
@@ -137,16 +138,16 @@ int main() {
 	//Pedir Taco Maiz Especial
 	bot.getEvents().onCommand("tme", [&bot](TgBot::Message::Ptr message) {
 
-		//Si no hay orden activa nos salimos
-		if(not ORDEN_ACTIVA) {
-			return;
-		}
-
 		//Sacamos el id_cliente_str de la variable
 		std::string id_cliente_str = std::to_string(message->from->id);
 
 		//Llamamos al funcion para copiar la base de datos de clientes
 		json clientes_guardados = copiaClientes();
+
+		//Si no hay orden activa nos salimos
+		if(not clientes_guardados[id_cliente_str)]["orden"]["activa"].get<bool>()) {
+			return;
+		}
 
 		if(clientes_guardados[id_cliente_str]["orden"]["tme"].is_null()){
 			clientes_guardados[id_cliente_str]["orden"]["tme"] =  1;
@@ -163,16 +164,16 @@ int main() {
 	//Resumen del Pedido
 	bot.getEvents().onCommand("resumen", [&bot](TgBot::Message::Ptr message) {
 
-		//Si no hay orden activa nos salimos
-		if(not ORDEN_ACTIVA) {
-			return;
-		}
-
 		//Sacamos el id_cliente_str de la variable
 		std::string id_cliente_str = std::to_string(message->from->id);
 
 		//Llamamos al funcion para copiar la base de datos de clientes
 		json clientes_guardados = copiaClientes();		
+
+		//Si no hay orden activa nos salimos
+		if(not clientes_guardados[id_cliente_str)]["orden"]["activa"].get<bool>()) {
+			return;
+		}
 
 		std::string resumen_mensaje = "";
 		if(not clientes_guardados[id_cliente_str]["orden"]["tma"].is_null()){
@@ -206,15 +207,18 @@ int main() {
 			if(not clientes_guardados[id_cliente_str]["nombre"].empty()) {
 				bot.getApi().sendMessage(message->from->id, "Hola " + clientes_guardados[id_cliente_str]["nombre"].get<std::string>() + " que deseas ordenar:\n\n"+
 												            "Maiz                            Precio\n"
-															"Tacos de asado         $13  /tma\n"+
-															"Tacos con chicharra $14  /tmc\n"+
-															"Especiales                  $15  /tme\n\n"
+															"Tacos de asado          $13  /tma\n"+
+															"Tacos con chicharra  $14  /tmc\n"+
+															"Especiales                   $15  /tme\n\n"
 															"Presiona /resumen para tener el resumen de tu pedido."
 															);
 			}
 
 			//Activamos la orden
-			ORDEN_ACTIVA = true;
+			clientes_guardados[id_cliente_str)]["orden"]["activa"]= true;
+
+			//Guardamos la informacion en la base de datos de clientes.
+			escribirClientes(clientes_guardados);
 		}
 	});
 
@@ -222,19 +226,26 @@ int main() {
 	//Por aqui pasan todos los mensajes
 	bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
 
+		//Sacamos el id_cliente_str de la variable
+		std::string id_cliente_str = std::to_string(message->from->id);
+
 		//Llamamos al funcion para copiar la base de datos de clientes
 		json clientes_guardados = copiaClientes();
 
 		//Continuacion del /alta
-		if(CONTINUACION_ALTA) {
+		if(clientes_guardados[id_cliente_str]["continuacion_alta"].get<bool>()) {
 			bot.getApi().sendMessage(message->chat->id, "Direccion: " + message->text);
-			clientes_guardados[std::to_string(message->from->id)]["direccion"] = message->text;
+			clientes_guardados[id_cliente_str)]["direccion"] = message->text;
 
+
+			//Cerramos el Alta
+			clientes_guardados[id_cliente_str]["continuacion_alta"] = false;
+			//Creamos la bandera orden activa
+			clientes_guardados[id_cliente_str)]["orden"]["activa"]= false;
 			//Guardamos la informacion en la base de datos de clientes.
 			escribirClientes(clientes_guardados);
 
 			bot.getApi().sendMessage(message->chat->id, "Tus datos han sido guardados:");
-			CONTINUACION_ALTA = false;
 		}
 
 
