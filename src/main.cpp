@@ -14,7 +14,7 @@ bool ORDENANDO_TACOS = false;
 
 json copiaClientes();
 json copiaCliente(string id_cliente);
-void escribirCliente(json datos);
+void escribirCliente(string id_cliente, json datos);
 
 
 struct Orden
@@ -297,10 +297,10 @@ json copiaCliente(string id_cliente){
 void escribirCliente(string id_cliente, json cliente){
 	//Abrimos el archivo clientes modo escritura
 	ofstream clientes_guardados("clientes.json");
-	//json clientes_copia = copiaClientes();
+	json clientes_copia = copiaClientes();
 	//clientes_copia.erase(id_cliente);
-	//clientes_copia[id_cliente] = cliente;
-	//clientes_guardados << clientes_copia;
+	clientes_copia[id_cliente] = cliente;
+	clientes_guardados << clientes_copia;
 	clientes_guardados.close();
 }
 
