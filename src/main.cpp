@@ -73,7 +73,7 @@ int main() {
 	//Pedir Taco Maiz Asado
 	bot.getEvents().onCommand("tma", [&bot](TgBot::Message::Ptr message) {
 
-		clientes_guardados = leerClientes(message);
+		json clientes_guardados = leerClientes(message);
 
 		if(clientes_guardados[std::to_string(message->from->id)]["orden"]["tma"].is_null()){
 			CLIENTES_JSON[std::to_string(message->from->id)]["orden"]["tma"] =  1;
