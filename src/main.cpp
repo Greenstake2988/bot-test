@@ -70,26 +70,26 @@ int main() {
 	//Taco Maiz Asado
 	bot.getEvents().onCommand("tma", [&bot](TgBot::Message::Ptr message) {
 		bot.getApi().sendMessage(message->chat->id, "Se agrego 1 taco de maiz de asado.");
-		nueva_orden.tma =+ 1;
+		nueva_orden.num_tma =+ 1;
 	});
 
 	//Taco Maiz Con Chicharra
 	bot.getEvents().onCommand("tmc", [&bot](TgBot::Message::Ptr message) {
 		bot.getApi().sendMessage(message->chat->id, "Se agrego 1 taco de maiz con chicharra.");
-		nueva_orden.tmc =+ 1;
+		nueva_orden.num_tmc =+ 1;
 	});
 
 	//Taco Maiz Especial
 	bot.getEvents().onCommand("tme", [&bot](TgBot::Message::Ptr message) {
 		bot.getApi().sendMessage(message->chat->id, "Se agrego 1 taco de maiz especial.");
-		nueva_orden.tme =+ 1;
+		nueva_orden.num_tme =+ 1;
 	});
 
 	//Taco Maiz Especial
 	bot.getEvents().onCommand("resumen", [&bot](TgBot::Message::Ptr message) {
-		if(nueva_orden.tma) bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.tma) " Tacos de maiz de asado" + );
-		if(nueva_orden.tmc) bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.tmc) " Tacos de maiz con chicharra" + );
-		if(nueva_orden.tme) bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.tme) " Tacos de maiz especiales" + );
+		if(nueva_orden.num_tma) bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.num_tma) " Tacos de maiz de asado" + );
+		if(nueva_orden.num_tmc) bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.num_tmc) " Tacos de maiz con chicharra" + );
+		if(nueva_orden.num_tme) bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.num_tme) " Tacos de maiz especiales" + );
 	});
 
 	bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
