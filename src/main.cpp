@@ -12,7 +12,8 @@ using namespace std;
 bool ORDENANDO_TACOS = false;
 //json CLIENTES_JSON;
 
-
+void imprimirSuma()
+int suma(int a , int b);
 json copiaClientes();
 json copiaCliente(string id_cliente);
 void escribirCliente(json datos);
@@ -280,6 +281,11 @@ int main() {
 
 }
 
+int suma(int a , int b){
+	int suma = a + b;
+	return suma;
+}
+
 json copiaClientes(){
 	//Abrimos el archivo clientes modo lectura
 	ifstream open_file("clientes.json");
@@ -289,8 +295,11 @@ json copiaClientes(){
 	return copiaClientes;
 }
 
+void imprimirSuma() {
+	cout<<to_string(suma(1+2));
+}
 json copiaCliente(string id_cliente){
-	json copiaClientes ///= copiaClientes();
+	json copiaClientes = copiaClientes();
 	return copiaClientes[id_cliente];
 }
 
