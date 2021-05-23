@@ -80,10 +80,10 @@ int main() {
 			//Checamos que el nombre del cliente no este vacio.
 			if(not clientes_guardados[std::to_string(message->from->id)]["nombre"].empty()) {
 				bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados[std::to_string(message->from->id)]["nombre"].get<std::string>() + " que deseas ordenar:\n"+
-												            "Maiz               Precio\n"+
-															"Tacos de asado      $13 /tma\n"+
+												            "Maiz               Precio\n"
+															"Tacos de asado         $13 /tma\n"+
 															"Tacos con chicharra $14 /tmc\n"+
-															"Especiales          $15 /tme\n"
+															"Especiales              $15 /tme\n"
 															);
 			}
 
