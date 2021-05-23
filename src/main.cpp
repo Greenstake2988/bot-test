@@ -9,7 +9,7 @@ using json = nlohmann::json;
 //Un flag para poder pasar los datos
 //a la funcion anyMessage
 bool CONTINUACION_ALTA = false;
-bool NUEVA_ORDEN = false;
+bool ORDEN_ACTIVA = false;
 bool ORDENANDO_TACOS = false;
 //json CLIENTES_JSON;
 
@@ -76,8 +76,18 @@ int main() {
 		bot.getApi().sendMessage(message->chat->id, "*Despliega el menu...");
 	});
 
+	bot.getEvents().onCommand("confirmar", [&bot](TgBot::Message::Ptr message) {
+		//Desplegamos el Menu
+		bot.getApi().sendMessage(message->chat->id, "*Despliega el menu...");
+	});
+
 	//Pedir Taco Maiz Asado
 	bot.getEvents().onCommand("tma", [&bot](TgBot::Message::Ptr message) {
+
+		//Si no hay orden activa nos salimos
+		if(not ORDEN_ACTIVA) {
+			return;
+		}
 
 		//Sacamos el id_cliente_str de la variable
 		std::string id_cliente_str = std::to_string(message->from->id);
@@ -100,6 +110,12 @@ int main() {
 
 	//Pedir Taco Maiz Con Chicharra
 	bot.getEvents().onCommand("tmc", [&bot](TgBot::Message::Ptr message) {
+
+		//Si no hay orden activa nos salimos
+		if(not ORDEN_ACTIVA) {
+			return;
+		}
+
 		//Sacamos el id_cliente_str de la variable
 		std::string id_cliente_str = std::to_string(message->from->id);
 
@@ -120,6 +136,12 @@ int main() {
 
 	//Pedir Taco Maiz Especial
 	bot.getEvents().onCommand("tme", [&bot](TgBot::Message::Ptr message) {
+
+		//Si no hay orden activa nos salimos
+		if(not ORDEN_ACTIVA) {
+			return;
+		}
+
 		//Sacamos el id_cliente_str de la variable
 		std::string id_cliente_str = std::to_string(message->from->id);
 
@@ -140,9 +162,19 @@ int main() {
 
 	//Resumen del Pedido
 	bot.getEvents().onCommand("resumen", [&bot](TgBot::Message::Ptr message) {
-		if(nueva_orden.num_tma) bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.num_tma) + " Tacos de maiz de asado");
-		if(nueva_orden.num_tmc) bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.num_tmc) + " Tacos de maiz con chicharra");
-		if(nueva_orden.num_tme) bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.num_tme) + " Tacos de maiz especiales");
+
+		//Sacamos el id_cliente_str de la variable
+		std::string id_cliente_str = std::to_string(message->from->id);
+
+		//Si no hay orden activa nos salimos
+		if(not ORDEN_ACTIVA) {
+			return;
+		}
+
+		json clientes_guardados = copiaClientes();
+			if(not clientes_guardados[id_cliente_str]["orden"]["tma"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tma"].get<std:string>() + " Tacos de maiz de asado");
+			if(not clientes_guardados[id_cliente_str]["orden"]["tmc"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tmc"].get<std:string>() + " Tacos de maiz con chicharra");
+			if(not clientes_guardados[id_cliente_str]["orden"]["tme"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tme"].get<std:string>() + " Tacos de maiz especiales");
 	});
 
 	bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
@@ -170,6 +202,9 @@ int main() {
 															"Presiona /resumen para tener el resumen de tu pedido."
 															);
 			}
+
+			//Activamos la orden
+			ORDEN_ACTIVA = true;
 		}
 	});
 
