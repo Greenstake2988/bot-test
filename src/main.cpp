@@ -11,7 +11,7 @@ using json = nlohmann::json;
 bool CONTINUACION_ALTA = false;
 bool NUEVA_ORDEN = false;
 bool ORDENANDO_TACOS = false;
-json CLIENTES_JSON;
+//json CLIENTES_JSON;
 
 
 json copiaClientes();
@@ -84,13 +84,13 @@ int main() {
 		json clientes_guardados = copiaClientes();
 
 		if(clientes_guardados[id_cliente_str]["orden"]["tma"].is_null()){
-			CLIENTES_JSON[id_cliente_str]["orden"]["tma"] =  1;
+			clientes_guardados[id_cliente_str]["orden"]["tma"] =  1;
 		} else {
-			CLIENTES_JSON[id_cliente_str]["orden"]["tma"] = clientes_guardados[id_cliente_str]["orden"]["tma"].get<int>() + 1;
+			clientes_guardados[id_cliente_str]["orden"]["tma"] = clientes_guardados[id_cliente_str]["orden"]["tma"].get<int>() + 1;
 		}
 
 		//Guardamos la informacion en la base de datos de clientes.
-		escribirClientes(CLIENTES_JSON);
+		escribirClientes(clientes_guardados);
 
 		bot.getApi().sendMessage(message->from->id, "Se agrego 1 taco de maiz de asado.");
 
