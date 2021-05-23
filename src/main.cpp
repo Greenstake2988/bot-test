@@ -11,7 +11,7 @@ using json = nlohmann::json;
 bool CONTINUACION_ALTA = false;
 bool NUEVA_ORDEN = false;
 bool ORDENANDO_TACOS = false;
-//json CLIENTES_JSON;
+json CLIENTES_JSON;
 
 
 json copiaClientes();
