@@ -14,6 +14,8 @@ bool ORDENANDO_TACOS = false;
 json CLIENTES_JSON;
 
 
+json leerClientes(TgBot::Message::Ptr message);
+
 struct Orden
 {	
 	//Taco Maiz Asado
@@ -70,12 +72,8 @@ int main() {
 
 	//Pedir Taco Maiz Asado
 	bot.getEvents().onCommand("tma", [&bot](TgBot::Message::Ptr message) {
-		//Abrimos el archivo clientes_guardados
-		std::string id_cliente = std::to_string(message->from->id);
-		std::ifstream open_file("clientes.json");
-		json clientes_guardados;
-		open_file >> clientes_guardados;
-		open_file.close();
+
+		clientes_guardados = leerClientes(message);
 
 		if(clientes_guardados[std::to_string(message->from->id)]["orden"]["tma"].is_null()){
 			CLIENTES_JSON[std::to_string(message->from->id)]["orden"]["tma"] =  1;
@@ -186,6 +184,14 @@ int main() {
 
 }
 
-
+json copiaClientes(TgBot::Message::Ptr message){
+	//Abrimos el archivo clientes_guardados
+	std::string id_cliente = std::to_string(message->from->id);
+	std::ifstream open_file("clientes.json");
+	json copiaClientes;
+	open_file >> copiaClientes;
+	open_file.close();
+	return copiaClientes;
+}
 
 
