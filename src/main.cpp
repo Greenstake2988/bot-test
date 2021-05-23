@@ -199,7 +199,7 @@ int main() {
 		//Si el id de cliente no esta dentro de nuestros id's.
 		//Le sugerimos /alta
 		//De lo contrario lo saludamos
-		if (not clientes_guardados.contains(id_cliente_str){
+		if (not clientes_guardados.contains(id_cliente_str)){
 			bot.getApi().sendMessage(message->from->id, "Eres un cliente nuevo \n"
 														"presiona /alta para guardar tu contacto.");
 		} else {
