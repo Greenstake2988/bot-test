@@ -8,13 +8,14 @@ using json = nlohmann::json;
 
 //Un flag para poder pasar los datos
 //a la funcion anyMessage
-bool NUEVA_ALTA = false;
+bool CONTINUACION_ALTA = false;
 bool NUEVA_ORDEN = false;
 bool ORDENANDO_TACOS = false;
 json CLIENTES_JSON;
 
 
-json copiaClientes(TgBot::Message::Ptr message);
+json copiaClientes();
+void escribirClientes(json datos);
 
 struct Orden
 {	
@@ -55,13 +56,16 @@ int main() {
 
 	bot.getEvents().onCommand("alta", [&bot](TgBot::Message::Ptr message) {
 	
-		NUEVA_ALTA = true;
+		CONTINUACION_ALTA = true;
 		//Emepezamos a Guardar los datos del contacto
 		bot.getApi().sendMessage(message->chat->id, "Nombre: " + message->from->firstName);
 		CLIENTES_JSON[std::to_string(message->from->id)]["nombre"] =  message->from->firstName;
 		bot.getApi().sendMessage(message->chat->id, "Apellido: " + message->from->lastName);
 		CLIENTES_JSON[std::to_string(message->from->id)]["apellido"] =  message->from->lastName;
 		bot.getApi().sendMessage(message->chat->id, "Dame tu direccion: ");
+
+		//Guardamos la informacion en la base de datos de clientes.
+		escribirClientes(CLIENTES_JSON);
 
 	});
 
@@ -73,17 +77,19 @@ int main() {
 	//Pedir Taco Maiz Asado
 	bot.getEvents().onCommand("tma", [&bot](TgBot::Message::Ptr message) {
 
+		std::string id_cliente = std::to_string(message->from->id);
+
+		//Llamamos al funcion para copiar la base de datos de clientes
 		json clientes_guardados = copiaClientes(message);
 
-		if(clientes_guardados[std::to_string(message->from->id)]["orden"]["tma"].is_null()){
-			CLIENTES_JSON[std::to_string(message->from->id)]["orden"]["tma"] =  1;
+		if(clientes_guardados[id_cliente]["orden"]["tma"].is_null()){
+			CLIENTES_JSON[id_cliente]["orden"]["tma"] =  1;
 		} else {
-			CLIENTES_JSON[std::to_string(message->from->id)]["orden"]["tma"] = clientes_guardados[std::to_string(message->from->id)]["orden"]["tma"].get<int>() + 1;
+			CLIENTES_JSON[id_cliente]["orden"]["tma"] = clientes_guardados[id_cliente]["orden"]["tma"].get<int>() + 1;
 		}
 
-		std::ofstream file("clientes.json");
-		file << CLIENTES_JSON;
-		file.close();
+		//Guardamos la informacion en la base de datos de clientes.
+		escribirClientes(CLIENTES_JSON);
 
 		bot.getApi().sendMessage(message->chat->id, "Se agrego 1 taco de maiz de asado.");
 
@@ -109,12 +115,9 @@ int main() {
 	});
 
 	bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
-		//Abrimos el archivo clientes_guardados
-		std::string id_cliente = std::to_string(message->from->id);
-		std::ifstream open_file("clientes.json");
-		json clientes_guardados;
-		open_file >> clientes_guardados;
-		open_file.close();
+
+		//Llamamos al funcion para copiar la base de datos de clientes
+		json clientes_guardados = copiaClientes(message);
 
 		//Si el id de cliente no esta dentro de nuestros id's.
 		//Le sugerimos /alta
@@ -143,14 +146,15 @@ int main() {
 	bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
 
 		//Continuacion del /alta
-		if(NUEVA_ALTA) {
+		if(CONTINUACION_ALTA) {
 			bot.getApi().sendMessage(message->chat->id, "Direccion: " + message->text);
 			CLIENTES_JSON[std::to_string(message->from->id)]["direccion"] = message->text;
-			std::ofstream file("clientes.json");
-			file << CLIENTES_JSON;
-			file.close();
+
+			//Guardamos la informacion en la base de datos de clientes.
+			escribirClientes(CLIENTES_JSON);
+
 			bot.getApi().sendMessage(message->chat->id, "Tus datos han sido guardados:");
-			NUEVA_ALTA = false;
+			CONTINUACION_ALTA = false;
 		}
 
 		if(NUEVA_ORDEN) {
@@ -184,9 +188,8 @@ int main() {
 
 }
 
-json copiaClientes(TgBot::Message::Ptr message){
-	//Abrimos el archivo clientes_guardados
-	std::string id_cliente = std::to_string(message->from->id);
+json copiaClientes(){
+	//Abrimos el archivo clientes.
 	std::ifstream open_file("clientes.json");
 	json copiaClientes;
 	open_file >> copiaClientes;
@@ -194,4 +197,9 @@ json copiaClientes(TgBot::Message::Ptr message){
 	return copiaClientes;
 }
 
+void escribirClientes(json datos){
+	std::ofstream clientes_guardados("clientes.json");
+	clientes_guardados << datos;
+	clientes_guardados.close();
+}
 
