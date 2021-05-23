@@ -199,6 +199,9 @@ int main() {
 		//Llamamos al funcion para copiar a los clientes de la base de datos
 		json clientes_guardados = copiaClientes();
 
+		//Llamamos al funcion para copiar al cliente de la base de datos
+		json cliente_guardado = copiaCliente(id_cliente_str);
+
 		//Si el id de cliente no esta dentro de nuestros id's.
 		//Le sugerimos /alta
 		//De lo contrario lo saludamos
