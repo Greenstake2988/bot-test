@@ -11,7 +11,7 @@ using json = nlohmann::json;
 bool NUEVA_ALTA = false;
 bool NUEVA_ORDEN = false;
 bool ORDENANDO_TACOS = false;
-json JSON_FILE;
+json CLIENTES_JSON;
 
 
 struct Orden
@@ -40,6 +40,7 @@ int main() {
 		std::ofstream clientes_guardados("clientes.json");
 		clientes_guardados << "[]";
 	}
+	clientes_guardados.close();
 
 	//Aqui dependiendo del '/commando/ la funcion actua
 	bot.getEvents().onCommand("start", [&bot](TgBot::Message::Ptr message) {
@@ -51,13 +52,13 @@ int main() {
 	});
 
 	bot.getEvents().onCommand("alta", [&bot](TgBot::Message::Ptr message) {
-		
+	
 		NUEVA_ALTA = true;
 		//Emepezamos a Guardar los datos del contacto
 		bot.getApi().sendMessage(message->chat->id, "Nombre: " + message->from->firstName);
-		JSON_FILE[std::to_string(message->from->id)]["nombre"] =  message->from->firstName;
+		CLIENTES_JSON[std::to_string(message->from->id)]["nombre"] =  message->from->firstName;
 		bot.getApi().sendMessage(message->chat->id, "Apellido: " + message->from->lastName);
-		JSON_FILE[std::to_string(message->from->id)]["apellido"] =  message->from->lastName;
+		CLIENTES_JSON[std::to_string(message->from->id)]["apellido"] =  message->from->lastName;
 		bot.getApi().sendMessage(message->chat->id, "Dame tu direccion: ");
 
 	});
@@ -74,18 +75,18 @@ int main() {
 		std::ifstream open_file("clientes.json");
 		json clientes_guardados;
 		open_file >> clientes_guardados;
-
-		
+		open_file.close();
 
 		if(clientes_guardados[std::to_string(message->from->id)]["orden"]["tma"].is_null()){
-			JSON_FILE[std::to_string(message->from->id)]["orden"]["tma"] =  1;
+			CLIENTES_JSON[std::to_string(message->from->id)]["orden"]["tma"] =  1;
 		} else {
-			JSON_FILE[std::to_string(message->from->id)]["orden"]["tma"] = clientes_guardados[std::to_string(message->from->id)]["orden"]["tma"].get<int>() + 1;
+			CLIENTES_JSON[std::to_string(message->from->id)]["orden"]["tma"] = clientes_guardados[std::to_string(message->from->id)]["orden"]["tma"].get<int>() + 1;
 		}
 
 		std::ofstream file("clientes.json");
-		file << JSON_FILE;
-		
+		file << CLIENTES_JSON;
+		file.close();
+
 		bot.getApi().sendMessage(message->chat->id, "Se agrego 1 taco de maiz de asado.");
 
 	});
@@ -115,6 +116,7 @@ int main() {
 		std::ifstream open_file("clientes.json");
 		json clientes_guardados;
 		open_file >> clientes_guardados;
+		open_file.close();
 
 		//Si el id de cliente no esta dentro de nuestros id's.
 		//Le sugerimos /alta
@@ -142,11 +144,13 @@ int main() {
 	//Por aqui pasan todos los mensajes
 	bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
 
+		//Continuacion del /alta
 		if(NUEVA_ALTA) {
 			bot.getApi().sendMessage(message->chat->id, "Direccion: " + message->text);
-			JSON_FILE[std::to_string(message->from->id)]["direccion"] = message->text;
+			CLIENTES_JSON[std::to_string(message->from->id)]["direccion"] = message->text;
 			std::ofstream file("clientes.json");
-			file << JSON_FILE;
+			file << CLIENTES_JSON;
+			file.close();
 			bot.getApi().sendMessage(message->chat->id, "Tus datos han sido guardados:");
 			NUEVA_ALTA = false;
 		}
