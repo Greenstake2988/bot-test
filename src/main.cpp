@@ -12,8 +12,6 @@ using namespace std;
 bool ORDENANDO_TACOS = false;
 //json CLIENTES_JSON;
 
-void imprimirSuma();
-int suma(int a , int b);
 json copiaClientes();
 json copiaCliente(string id_cliente);
 void escribirCliente(json datos);
@@ -281,10 +279,6 @@ int main() {
 
 }
 
-int suma(int a , int b){
-	int suma = a + b;
-	return suma;
-}
 
 json copiaClientes(){
 	//Abrimos el archivo clientes modo lectura
@@ -295,20 +289,17 @@ json copiaClientes(){
 	return copiaClientes;
 }
 
-void imprimirSuma() {
-	cout<<to_string(suma(1,2));
-}
 json copiaCliente(string id_cliente){
-	json copiaClientes = copiaClientes();
-	return copiaClientes[id_cliente];
+	json clientes_copia = copiaClientes();
+	return clientes_copia[id_cliente];
 }
 
 void escribirCliente(string id_cliente, json cliente){
 	//Abrimos el archivo clientes modo escritura
 	ofstream clientes_guardados("clientes.json");
-	json copiaClientes = copiaClientes();
-	copiaClientes[id_cliente] = cliente;
-	clientes_guardados << copiaClientes;
+	json clientes_copia = copiaClientes();
+	clientes_copia[id_cliente] = cliente;
+	clientes_guardados << clientes_copia;
 	clientes_guardados.close();
 }
 
