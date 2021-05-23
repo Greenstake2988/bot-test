@@ -40,7 +40,7 @@ int main() {
 	std::ifstream clientes_guardados("clientes.json");
 	if(not clientes_guardados.good()){
 		std::ofstream clientes_guardados("clientes.json");
-		clientes_guardados << "[]";
+		clientes_guardados << "{}";
 	}
 	clientes_guardados.close();
 
@@ -174,9 +174,9 @@ int main() {
 		//Llamamos al funcion para copiar la base de datos de clientes
 		json clientes_guardados = copiaClientes();		
 
-		if(not clientes_guardados[id_cliente_str]["orden"]["tma"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str].get<std::string>() + " Tacos de maiz de asado");
-		//if(not clientes_guardados[id_cliente_str]["orden"]["tmc"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tmc"].get<std::string>() + " Tacos de maiz con chicharra");
-		//if(not clientes_guardados[id_cliente_str]["orden"]["tme"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tme"].get<std::string>() + " Tacos de maiz especiales");
+		if(not clientes_guardados[id_cliente_str]["orden"]["tma"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tma"].get<std::string>() + " Tacos de maiz de asado");
+		if(not clientes_guardados[id_cliente_str]["orden"]["tmc"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tmc"].get<std::string>() + " Tacos de maiz con chicharra");
+		if(not clientes_guardados[id_cliente_str]["orden"]["tme"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tme"].get<std::string>() + " Tacos de maiz especiales");
 
 	});
 
