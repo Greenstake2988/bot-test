@@ -280,9 +280,17 @@ int main() {
 
 }
 
+json copiaClientes(){
+	//Abrimos el archivo clientes modo lectura
+	ifstream open_file("clientes.json");
+	json copiaClientes;
+	open_file >> copiaClientes;
+	open_file.close();
+	return copiaClientes;
+}
 
 json copiaCliente(string id_cliente){
-	json copiaClientes = copiaClientes();
+	//json copiaClientes = copiaClientes();
 	return copiaClientes[id_cliente];
 }
 
@@ -295,11 +303,3 @@ void escribirCliente(string id_cliente, json cliente){
 	clientes_guardados.close();
 }
 
-json copiaClientes(){
-	//Abrimos el archivo clientes modo lectura
-	ifstream open_file("clientes.json");
-	json copiaClientes;
-	open_file >> copiaClientes;
-	open_file.close();
-	return copiaClientes;
-}
