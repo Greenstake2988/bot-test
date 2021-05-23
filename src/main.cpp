@@ -63,14 +63,14 @@ int main() {
 
 		//Emepezamos a Guardar los datos del contacto
 		bot.getApi().sendMessage(message->chat->id, "Nombre: " + message->from->firstName);
-		cliente_nuevo[id_cliente_str)]["nombre"] =  message->from->firstName;
+		cliente_nuevo[id_cliente_str]["nombre"] =  message->from->firstName;
 
 		bot.getApi().sendMessage(message->chat->id, "Apellido: " + message->from->lastName);
 		cliente_nuevo[id_cliente_str]["apellido"] =  message->from->lastName;
 
 		bot.getApi().sendMessage(message->chat->id, "Dame tu direccion: ");
 
-		cliente_nuevo[id_cliente_str)]["continuacion_alta"] =  true;
+		cliente_nuevo[id_cliente_str]["continuacion_alta"] =  true;
 
 		//Guardamos la informacion en la base de datos de clientes.
 		escribirCliente(id_cliente_str, cliente_nuevo);
