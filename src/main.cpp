@@ -83,7 +83,7 @@ int main() {
 												            "Maiz               Precio\n"
 															"Tacos de asado         $13 /tma\n"+
 															"Tacos con chicharra $14 /tmc\n"+
-															"Especiales                 $15 /tme\n"
+															"Especiales                  $15 /tme\n"
 															);
 			}
 
