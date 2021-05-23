@@ -33,7 +33,6 @@ Orden nueva_orden;
 
 int main() {
 
-	
 	//Direccion unica del bot @Green_88bot
 	TgBot::Bot bot("1864266042:AAH-1fI-aLsGN78pWbBRmXYiyeOnV9Y86Rg");
 
@@ -101,14 +100,42 @@ int main() {
 
 	//Pedir Taco Maiz Con Chicharra
 	bot.getEvents().onCommand("tmc", [&bot](TgBot::Message::Ptr message) {
-		bot.getApi().sendMessage(message->chat->id, "Se agrego 1 taco de maiz con chicharra.");
-		nueva_orden.num_tmc += 1;
+		//Sacamos el id_cliente_str de la variable
+		std::string id_cliente_str = std::to_string(message->from->id);
+
+		//Llamamos al funcion para copiar la base de datos de clientes
+		json clientes_guardados = copiaClientes();
+
+		if(clientes_guardados[id_cliente_str]["orden"]["tmc"].is_null()){
+			clientes_guardados[id_cliente_str]["orden"]["tmc"] =  1;
+		} else {
+			clientes_guardados[id_cliente_str]["orden"]["tmc"] = clientes_guardados[id_cliente_str]["orden"]["tmc"].get<int>() + 1;
+		}
+
+		//Guardamos la informacion en la base de datos de clientes.
+		escribirClientes(clientes_guardados);
+
+		bot.getApi().sendMessage(message->from->id, "Se agrego 1 taco de maiz con chicharra.");
 	});
 
 	//Pedir Taco Maiz Especial
 	bot.getEvents().onCommand("tme", [&bot](TgBot::Message::Ptr message) {
-		bot.getApi().sendMessage(message->chat->id, "Se agrego 1 taco de maiz especial.");
-		nueva_orden.num_tme += 1;
+		//Sacamos el id_cliente_str de la variable
+		std::string id_cliente_str = std::to_string(message->from->id);
+
+		//Llamamos al funcion para copiar la base de datos de clientes
+		json clientes_guardados = copiaClientes();
+
+		if(clientes_guardados[id_cliente_str]["orden"]["tme"].is_null()){
+			clientes_guardados[id_cliente_str]["orden"]["tme"] =  1;
+		} else {
+			clientes_guardados[id_cliente_str]["orden"]["tme"] = clientes_guardados[id_cliente_str]["orden"]["tme"].get<int>() + 1;
+		}
+
+		//Guardamos la informacion en la base de datos de clientes.
+		escribirClientes(clientes_guardados);
+
+		bot.getApi().sendMessage(message->from->id, "Se agrego 1 taco de maiz especial.");
 	});
 
 	//Resumen del Pedido
@@ -143,8 +170,6 @@ int main() {
 															"Presiona /resumen para tener el resumen de tu pedido."
 															);
 			}
-
-			NUEVA_ORDEN = true;
 		}
 	});
 
@@ -167,11 +192,6 @@ int main() {
 			CONTINUACION_ALTA = false;
 		}
 
-		if(NUEVA_ORDEN) {
-			if(ORDENANDO_TACOS) {
-		
-			}
-		}
 
 		//Ejemplo de comparador de texto
 		if (StringTools::startsWith(message->text, "/start")) {
