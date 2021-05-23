@@ -75,13 +75,19 @@ int main() {
 		json clientes_guardados;
 		open_file >> clientes_guardados;
 
-		bot.getApi().sendMessage(message->chat->id, "Se agrego 1 taco de maiz de asado.");
+		
 
-		JSON_FILE[std::to_string(message->from->id)]["orden"]["tma"] = JSON_FILE[std::to_string(message->from->id)]["orden"]["tma"].get<int>() + 1;
+		if(clientes_guardados[std::to_string(message->from->id)]["orden"]["tma"].get<int>()){
+			JSON_FILE[std::to_string(message->from->id)]["orden"]["tma"] =  1;
+		} else {
+			JSON_FILE[std::to_string(message->from->id)]["orden"]["tma"] = clientes_guardados[std::to_string(message->from->id)]["orden"]["tma"].get<int>() + 1;
+		}
 
 		std::ofstream file("clientes.json");
 		file << JSON_FILE;
 		
+		bot.getApi().sendMessage(message->chat->id, "Se agrego 1 taco de maiz de asado.");
+
 	});
 
 	//Pedir Taco Maiz Con Chicharra
