@@ -166,6 +166,9 @@ int main() {
 		//Sacamos el id_cliente_str de la variable
 		std::string id_cliente_str = std::to_string(message->from->id);
 
+		//Llamamos al funcion para copiar la base de datos de clientes
+		json clientes_guardados = copiaClientes();		
+
 		//Si no hay orden activa nos salimos
 		if(not ORDEN_ACTIVA) {
 			return;
