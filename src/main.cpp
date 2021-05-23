@@ -14,19 +14,21 @@ bool ORDENANDO_TACOS = false;
 json JSON_FILE;
 
 
-
-struct Tacos
-{
-	int num_tacos = 0;
+struct Orden
+{	
+	//Taco Maiz Asado
+	int num_tma = 0;
+	//Taco Maiz Con Chicharra
+	int num_tmc = 0;
+	//Taco Maiz Especial
+	int num_tme = 0;
 	bool sin_cebolla = false;
 	bool con_chicharra = false;
-	bool especial = false;
 };
-
-Tacos NUEVOS_TACOS;
 
 int main() {
 
+	Orden nueva_orden;
 	//Direccion unica del bot @Green_88bot
 	TgBot::Bot bot("1864266042:AAH-1fI-aLsGN78pWbBRmXYiyeOnV9Y86Rg");
 
@@ -66,6 +68,26 @@ int main() {
 	//Taco Maiz Asado
 	bot.getEvents().onCommand("tma", [&bot](TgBot::Message::Ptr message) {
 		bot.getApi().sendMessage(message->chat->id, "Se agrego 1 taco de maiz de asado.");
+		nueva_orden.tma =+ 1;
+	});
+
+	//Taco Maiz Con Chicharra
+	bot.getEvents().onCommand("tmc", [&bot](TgBot::Message::Ptr message) {
+		bot.getApi().sendMessage(message->chat->id, "Se agrego 1 taco de maiz con chicharra.");
+		nueva_orden.tmc =+ 1;
+	});
+
+	//Taco Maiz Especial
+	bot.getEvents().onCommand("tme", [&bot](TgBot::Message::Ptr message) {
+		bot.getApi().sendMessage(message->chat->id, "Se agrego 1 taco de maiz especial.");
+		nueva_orden.tme =+ 1;
+	});
+
+	//Taco Maiz Especial
+	bot.getEvents().onCommand("resumen", [&bot](TgBot::Message::Ptr message) {
+		if(nueva_orden.tma) bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.tma) " Tacos de maiz de asado" + );
+		if(nueva_orden.tmc) bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.tmc) " Tacos de maiz con chicharra" + );
+		if(nueva_orden.tme) bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.tme) " Tacos de maiz especiales" + );
 	});
 
 	bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
@@ -93,13 +115,6 @@ int main() {
 			}
 
 			NUEVA_ORDEN = true;
-		}
-	});
-
-	bot.getEvents().onCommand("1", [&bot](TgBot::Message::Ptr message) {
-		if(NUEVA_ORDEN) {
-			bot.getApi().sendMessage(message->chat->id, "Cuantos tacos quieres");
-			ORDENANDO_TACOS = true;
 		}
 	});
 
