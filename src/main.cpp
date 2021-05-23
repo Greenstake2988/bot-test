@@ -12,7 +12,7 @@ using namespace std;
 bool ORDENANDO_TACOS = false;
 //json CLIENTES_JSON;
 
-void imprimirSuma()
+void imprimirSuma();
 int suma(int a , int b);
 json copiaClientes();
 json copiaCliente(string id_cliente);
