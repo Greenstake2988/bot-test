@@ -14,7 +14,9 @@ bool ORDENANDO_TACOS = false;
 
 
 json copiaClientes();
+json copiaCliente(string id_cliente);
 void escribirCliente(json datos);
+
 
 struct Orden
 {	
@@ -244,7 +246,7 @@ int main() {
 			//Creamos la bandera orden activa
 			cliente_guardado["orden"]["activa"]= false;
 			//Guardamos la informacion en la base de datos de clientes.
-			escribirCliente(clientes_guardados);
+			escribirCliente(cliente_guardado);
 
 			bot.getApi().sendMessage(message->chat->id, "Tus datos han sido guardados:");
 		}
@@ -293,7 +295,7 @@ void escribirCliente(string id_cliente, json cliente){
 	//Abrimos el archivo clientes modo escritura
 	ofstream clientes_guardados("clientes.json");
 	json copiaClientes = copiaClientes();
-	copiaClientes[id_cliente] = cliente
+	copiaClientes[id_cliente] = cliente;
 	clientes_guardados << copiaClientes;
 	clientes_guardados.close();
 }
