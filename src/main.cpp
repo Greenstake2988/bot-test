@@ -70,7 +70,7 @@ int main() {
 	//Taco Maiz Asado
 	bot.getEvents().onCommand("tma", [&bot](TgBot::Message::Ptr message) {
 		bot.getApi().sendMessage(message->chat->id, "Se agrego 1 taco de maiz de asado.");
-		nueva_orden.num_tma =+ 1;
+		nueva_orden.num_tma = nueva_orden.num_tma + 1;
 	});
 
 	//Taco Maiz Con Chicharra
