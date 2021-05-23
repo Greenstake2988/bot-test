@@ -290,14 +290,14 @@ json copiaClientes(){
 }
 
 json copiaCliente(string id_cliente){
-	json copiaClientes = copiaClientes();
+	auto copiaClientes = copiaClientes();
 	return copiaClientes[id_cliente];
 }
 
 void escribirCliente(string id_cliente, json cliente){
 	//Abrimos el archivo clientes modo escritura
 	ofstream clientes_guardados("clientes.json");
-	json copiaClientes = copiaClientes();
+	auto copiaClientes = copiaClientes();
 	copiaClientes[id_cliente] = cliente;
 	clientes_guardados << copiaClientes;
 	clientes_guardados.close();
