@@ -172,9 +172,9 @@ int main() {
 		}
 
 		json clientes_guardados = copiaClientes();
-			if(not clientes_guardados[id_cliente_str]["orden"]["tma"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tma"].get<std:string>() + " Tacos de maiz de asado");
-			if(not clientes_guardados[id_cliente_str]["orden"]["tmc"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tmc"].get<std:string>() + " Tacos de maiz con chicharra");
-			if(not clientes_guardados[id_cliente_str]["orden"]["tme"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tme"].get<std:string>() + " Tacos de maiz especiales");
+			if(not clientes_guardados[id_cliente_str]["orden"]["tma"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tma"].get<std::string>() + " Tacos de maiz de asado");
+			if(not clientes_guardados[id_cliente_str]["orden"]["tmc"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tmc"].get<std::string>() + " Tacos de maiz con chicharra");
+			if(not clientes_guardados[id_cliente_str]["orden"]["tme"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tme"].get<std::string>() + " Tacos de maiz especiales");
 	});
 
 	bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
