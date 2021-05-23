@@ -176,13 +176,13 @@ int main() {
 
 		std::string resumen_mensaje = "";
 		if(not clientes_guardados[id_cliente_str]["orden"]["tma"].is_null()){
-			resumen_mensaje += std::to_string(clientes_guardados[id_cliente_str]["orden"]["tma"].get<int>()) + " Tacos de maiz de asado\n";
+			resumen_mensaje += std::to_string(clientes_guardados[id_cliente_str]["orden"]["tma"].get<int>()) + " tacos de maiz de asado\n";
 		} 
 		if(not clientes_guardados[id_cliente_str]["orden"]["tmc"].is_null()){
-			resumen_mensaje += std::to_string(clientes_guardados[id_cliente_str]["orden"]["tmc"].get<int>()) + " Tacos de maiz con chicharra\n";
+			resumen_mensaje += std::to_string(clientes_guardados[id_cliente_str]["orden"]["tmc"].get<int>()) + " tacos de maiz con chicharra\n";
 		}  
 		if(not clientes_guardados[id_cliente_str]["orden"]["tme"].is_null()){
-			resumen_mensaje += std::to_string(clientes_guardados[id_cliente_str]["orden"]["tme"].get<int>())+ " Tacos de maiz especiales\n";
+			resumen_mensaje += std::to_string(clientes_guardados[id_cliente_str]["orden"]["tme"].get<int>())+ " tacos de maiz especiales\n";
 		}  
 		bot.getApi().sendMessage(message->chat->id, resumen_mensaje);
 	});
@@ -204,11 +204,11 @@ int main() {
 		} else {
 			//Checamos que el nombre del cliente no este vacio.
 			if(not clientes_guardados[id_cliente_str]["nombre"].empty()) {
-				bot.getApi().sendMessage(message->from->id, "Hola " + clientes_guardados[id_cliente_str]["nombre"].get<std::string>() + " que deseas ordenar:\n"+
-												            "Maiz                              Precio\n"
-															"Tacos de asado         $13 /tma\n"+
-															"Tacos con chicharra $14 /tmc\n"+
-															"Especiales                  $15 /tme\n"
+				bot.getApi().sendMessage(message->from->id, "Hola " + clientes_guardados[id_cliente_str]["nombre"].get<std::string>() + " que deseas ordenar:\n\n"+
+												            "Maiz                            Precio\n"
+															"Tacos de asado         $13  /tma\n"+
+															"Tacos con chicharra $14  /tmc\n"+
+															"Especiales                  $15  /tme\n\n"
 															"Presiona /resumen para tener el resumen de tu pedido."
 															);
 			}
