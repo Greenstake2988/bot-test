@@ -87,9 +87,9 @@ int main() {
 
 	//Taco Maiz Especial
 	bot.getEvents().onCommand("resumen", [&bot](TgBot::Message::Ptr message) {
-		if(nueva_orden.num_tma) {bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.num_tma) " Tacos de maiz de asado");}
-		if(nueva_orden.num_tmc) {bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.num_tmc) " Tacos de maiz con chicharra");}
-		if(nueva_orden.num_tme) {bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.num_tme) " Tacos de maiz especiales");}
+		if(nueva_orden.num_tma) bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.num_tma) + " Tacos de maiz de asado");
+		if(nueva_orden.num_tmc) bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.num_tmc) + " Tacos de maiz con chicharra");
+		if(nueva_orden.num_tme) bot.getApi().sendMessage(message->chat->id, std::to_string(nueva_orden.num_tme) + " Tacos de maiz especiales");
 	});
 
 	bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
