@@ -92,7 +92,7 @@ int main() {
 		json clientes_guardados = copiaClientes();
 
 		//Si no hay orden activa nos salimos
-		if(not clientes_guardados[id_cliente_str)]["orden"]["activa"].get<bool>()) {
+		if(not clientes_guardados[id_cliente_str]["orden"]["activa"].get<bool>()) {
 			return;
 		}
 
@@ -119,7 +119,7 @@ int main() {
 		json clientes_guardados = copiaClientes();
 
 		//Si no hay orden activa nos salimos
-		if(not clientes_guardados[id_cliente_str)]["orden"]["activa"].get<bool>()) {
+		if(not clientes_guardados[id_cliente_str]["orden"]["activa"].get<bool>()) {
 			return;
 		}
 
@@ -145,7 +145,7 @@ int main() {
 		json clientes_guardados = copiaClientes();
 
 		//Si no hay orden activa nos salimos
-		if(not clientes_guardados[id_cliente_str)]["orden"]["activa"].get<bool>()) {
+		if(not clientes_guardados[id_cliente_str]["orden"]["activa"].get<bool>()) {
 			return;
 		}
 
@@ -171,7 +171,7 @@ int main() {
 		json clientes_guardados = copiaClientes();		
 
 		//Si no hay orden activa nos salimos
-		if(not clientes_guardados[id_cliente_str)]["orden"]["activa"].get<bool>()) {
+		if(not clientes_guardados[id_cliente_str]["orden"]["activa"].get<bool>()) {
 			return;
 		}
 
@@ -199,7 +199,7 @@ int main() {
 		//Si el id de cliente no esta dentro de nuestros id's.
 		//Le sugerimos /alta
 		//De lo contrario lo saludamos
-		if (not clientes_guardados.contains(id_cliente_str)){
+		if (not clientes_guardados.contains(id_cliente_str){
 			bot.getApi().sendMessage(message->from->id, "Eres un cliente nuevo \n"
 														"presiona /alta para guardar tu contacto.");
 		} else {
@@ -215,7 +215,7 @@ int main() {
 			}
 
 			//Activamos la orden
-			clientes_guardados[id_cliente_str)]["orden"]["activa"]= true;
+			clientes_guardados[id_cliente_str]["orden"]["activa"]= true;
 
 			//Guardamos la informacion en la base de datos de clientes.
 			escribirClientes(clientes_guardados);
