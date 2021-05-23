@@ -298,7 +298,7 @@ void escribirCliente(string id_cliente, json cliente){
 	//Abrimos el archivo clientes modo escritura
 	ofstream clientes_guardados("clientes.json");
 	json clientes_copia = copiaClientes();
-	clientes_copia.erase[id_cliente];
+	clientes_copia.erase(id_cliente);
 	clientes_copia.[id_cliente] = cliente;
 	clientes_guardados << clientes_copia;
 	clientes_guardados.close();
