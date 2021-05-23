@@ -14,7 +14,16 @@ bool ORDENANDO_TACOS = false;
 json CLIENTES_JSON;
 
 
-json leerClientes(TgBot::Message::Ptr message);
+//json leerClientes(TgBot::Message::Ptr message);
+json copiaClientes(TgBot::Message::Ptr message){
+	//Abrimos el archivo clientes_guardados
+	std::string id_cliente = std::to_string(message->from->id);
+	std::ifstream open_file("clientes.json");
+	json copiaClientes;
+	open_file >> copiaClientes;
+	open_file.close();
+	return copiaClientes;
+}
 
 struct Orden
 {	
@@ -184,14 +193,6 @@ int main() {
 
 }
 
-json copiaClientes(TgBot::Message::Ptr message){
-	//Abrimos el archivo clientes_guardados
-	std::string id_cliente = std::to_string(message->from->id);
-	std::ifstream open_file("clientes.json");
-	json copiaClientes;
-	open_file >> copiaClientes;
-	open_file.close();
-	return copiaClientes;
-}
+
 
 
