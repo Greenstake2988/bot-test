@@ -163,21 +163,21 @@ int main() {
 	//Resumen del Pedido
 	bot.getEvents().onCommand("resumen", [&bot](TgBot::Message::Ptr message) {
 
+		//Si no hay orden activa nos salimos
+		if(not ORDEN_ACTIVA) {
+			return;
+		}
+
 		//Sacamos el id_cliente_str de la variable
 		std::string id_cliente_str = std::to_string(message->from->id);
 
 		//Llamamos al funcion para copiar la base de datos de clientes
 		json clientes_guardados = copiaClientes();		
 
-		//Si no hay orden activa nos salimos
-		if(not ORDEN_ACTIVA) {
-			return;
-		}
+		if(not clientes_guardados[id_cliente_str]["orden"]["tma"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tma"].get<std::string>() + " Tacos de maiz de asado");
+		if(not clientes_guardados[id_cliente_str]["orden"]["tmc"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tmc"].get<std::string>() + " Tacos de maiz con chicharra");
+		if(not clientes_guardados[id_cliente_str]["orden"]["tme"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tme"].get<std::string>() + " Tacos de maiz especiales");
 
-		json clientes_guardados = copiaClientes();
-			if(not clientes_guardados[id_cliente_str]["orden"]["tma"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tma"].get<std::string>() + " Tacos de maiz de asado");
-			if(not clientes_guardados[id_cliente_str]["orden"]["tmc"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tmc"].get<std::string>() + " Tacos de maiz con chicharra");
-			if(not clientes_guardados[id_cliente_str]["orden"]["tme"].is_null()) bot.getApi().sendMessage(message->chat->id, clientes_guardados[id_cliente_str]["orden"]["tme"].get<std::string>() + " Tacos de maiz especiales");
 	});
 
 	bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
