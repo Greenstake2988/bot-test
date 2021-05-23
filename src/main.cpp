@@ -63,6 +63,11 @@ int main() {
 		bot.getApi().sendMessage(message->chat->id, "*Despliega el menu...");
 	});
 
+	//Taco Maiz Asado
+	bot.getEvents().onCommand("tma", [&bot](TgBot::Message::Ptr message) {
+		bot.getApi().sendMessage(message->chat->id, "Se agrego 1 taco de maiz de asado.");
+	});
+
 	bot.getEvents().onCommand("ordenar", [&bot](TgBot::Message::Ptr message) {
 		//Abrimos el archivo clientes_guardados
 		std::string id_cliente = std::to_string(message->from->id);
@@ -80,7 +85,7 @@ int main() {
 			//Checamos que el nombre del cliente no este vacio.
 			if(not clientes_guardados[std::to_string(message->from->id)]["nombre"].empty()) {
 				bot.getApi().sendMessage(message->chat->id, "Hola " + clientes_guardados[std::to_string(message->from->id)]["nombre"].get<std::string>() + " que deseas ordenar:\n"+
-												            "Maiz                                Precio\n"
+												            "Maiz                              Precio\n"
 															"Tacos de asado         $13 /tma\n"+
 															"Tacos con chicharra $14 /tmc\n"+
 															"Especiales                  $15 /tme\n"
