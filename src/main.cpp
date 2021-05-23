@@ -296,7 +296,7 @@ json copiaClientes(){
 }
 
 void imprimirSuma() {
-	cout<<to_string(suma(1+2));
+	cout<<to_string(suma(1,2));
 }
 json copiaCliente(string id_cliente){
 	json copiaClientes = copiaClientes();
