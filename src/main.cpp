@@ -233,7 +233,7 @@ int main() {
 		json clientes_guardados = copiaClientes();
 
 		//Continuacion del /alta
-		if(clientes_guardados[id_cliente_str]["continuacion_alta"].is_null()) {
+		if(not clientes_guardados[id_cliente_str]["continuacion_alta"].is_null()) {
 			bot.getApi().sendMessage(message->chat->id, "Direccion: " + message->text);
 			clientes_guardados[id_cliente_str]["direccion"] = message->text;
 
