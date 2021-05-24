@@ -182,7 +182,7 @@ int main() {
 		}
 
 		//Le ponemos el nuevo valor
-		clientes_guardados[id_cliente_str]["orden"]["tme"] = cliente_orden_tmc;
+		clientes_guardados[id_cliente_str]["orden"]["tme"] = cliente_orden_tme;
 
 		//Guardamos la informacion en la base de datos de clientes.
 		escribirClientes(clientes_guardados);
@@ -198,7 +198,7 @@ int main() {
 		string id_cliente_str = to_string(message->from->id);
 
 		///Llamamos al funcion para copiar  la base de datos
-		json clientes_guardados = copiasCliente();			
+		json clientes_guardados = copiaClientes();			
 
 		//Si no hay orden activa nos salimos
 		if(not clientes_guardados[id_cliente_str]["orden"]["activa"].get<bool>()) {
@@ -210,13 +210,13 @@ int main() {
 
 		//Agregamos texto si tenemso valores en la orden.
 		string resumen_mensaje = "";
-		if(not cliente_guardado["orden"]["tma"].is_null()){
+		if(not cliente_orden["tma"].is_null()){
 			resumen_mensaje += to_string(cliente_orden["tma"].get<int>()) + " tacos de maiz de asado\n";
 		} 
-		if(not cliente_guardado["orden"]["tmc"].is_null()){
+		if(not cliente_orden["tmc"].is_null()){
 			resumen_mensaje += to_string(cliente_orden["tmc"].get<int>()) + " tacos de maiz con chicharra\n";
 		}  
-		if(not cliente_guardado["orden"]["tme"].is_null()){
+		if(not cliente_orden["tme"].is_null()){
 			resumen_mensaje += to_string(cliente_orden["tme"].get<int>())+ " tacos de maiz especiales\n";
 		}
 
