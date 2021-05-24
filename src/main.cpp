@@ -240,7 +240,6 @@ int main() {
 
 		//Checamos que el cliente exista.
 		if(clientes_guardados[id_cliente_str].is_null()){
-			printf("si");
 			return;
 		}
 
@@ -294,8 +293,8 @@ int main() {
 			bot.getApi().sendMessage(message->chat->id, "Direccion: " + message->text);
 			cliente["direccion"] = message->text;
 
-			//Cerramos el Alta
-			cliente["continuacion_alta"] = false;
+			//borramos el Alta
+			cliente.erase("continuacion_alta") = false;
 			//Creamos la bandera orden activa
 			cliente["orden"]["activa"]= false;
 			
