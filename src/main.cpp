@@ -174,8 +174,8 @@ int main() {
 
 		//Llamamos al funcion para copiar al cliente de la base de datos
 		json cliente_guardado = copiaCliente(id_cliente_str);		
-		
-		if(clientes_guardados.is_null()){
+
+		if(cliente_guardado.is_null()){
 			return;
 		}
 
