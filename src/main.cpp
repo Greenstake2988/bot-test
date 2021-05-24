@@ -240,6 +240,7 @@ int main() {
 
 		//Checamos que el cliente exista.
 		if(clientes_guardados[id_cliente_str].is_null()){
+			printf("si".c_str)
 			return;
 		}
 
