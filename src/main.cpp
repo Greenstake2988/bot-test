@@ -59,7 +59,7 @@ int main() {
 		string id_cliente_str = to_string(message->from->id);
 
 		//Llamamos al funcion para copiar  la base de datos
-		json clientes_guardados = copiasCliente();
+		json clientes_guardados = copiaClientes();
 
 		//Emepezamos a Guardar los datos del contacto
 		bot.getApi().sendMessage(message->chat->id, "Nombre: " + message->from->firstName);
@@ -95,7 +95,7 @@ int main() {
 		string id_cliente_str = to_string(message->from->id);
 
 		//Llamamos al funcion para copiar  la base de datos
-		json clientes_guardados = copiasCliente();	
+		json clientes_guardados = copiaClientes();	
 
 		//Si no hay orden activa nos salimos
 		if(not clientes_guardados[id_cliente_str]["orden"]["activa"].get<bool>()) {
@@ -130,7 +130,7 @@ int main() {
 		string id_cliente_str = to_string(message->from->id);
 
 		//Llamamos al funcion para copiar  la base de datos
-		json clientes_guardados = copiasCliente();		
+		json clientes_guardados = copiaClientes();		
 
 		//Si no hay orden activa nos salimos
 		if(not clientes_guardados[id_cliente_str]["orden"]["activa"].get<bool>()) {
@@ -164,7 +164,7 @@ int main() {
 		string id_cliente_str = to_string(message->from->id);
 
 		//Llamamos al funcion para copiar  la base de datos
-		json clientes_guardados = copiasCliente();		
+		json clientes_guardados = copiaClientes();		
 
 		//Si no hay orden activa nos salimos
 		if(not clientes_guardados[id_cliente_str]["orden"]["activa"].get<bool>()) {
