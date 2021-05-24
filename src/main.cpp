@@ -174,11 +174,15 @@ int main() {
 
 		//Llamamos al funcion para copiar al cliente de la base de datos
 		json cliente_guardado = copiaCliente(id_cliente_str);		
+		
+		if(clientes_guardados.is_null()){
+			return;
+		}
 
 		//Si no hay orden activa nos salimos
-		/* if(not cliente_guardado["orden"]["activa"].is_null() || not cliente_guardado["orden"]["activa"].get<bool>()) {
+		if(not cliente_guardado["orden"]["activa"].get<bool>()) {
 			return;
-		} */
+		}
 
 		string resumen_mensaje = "";
 		if(not cliente_guardado["orden"]["tma"].is_null()){
