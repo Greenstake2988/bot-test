@@ -200,6 +200,12 @@ int main() {
 		///Llamamos al funcion para copiar  la base de datos
 		json clientes_guardados = copiaClientes();			
 
+		//Checamos que el cliente exista.
+
+		if(clientes_guardados[id_cliente_str].is_null){
+			return
+		}
+
 		//Si no hay orden activa nos salimos
 		if(not clientes_guardados[id_cliente_str]["orden"]["activa"].get<bool>()) {
 			return;
