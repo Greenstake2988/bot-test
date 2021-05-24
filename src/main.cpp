@@ -13,8 +13,7 @@ bool ORDENANDO_TACOS = false;
 //json CLIENTES_JSON;
 
 json copiaClientes();
-json copiaCliente(string id_cliente);
-void escribirCliente(string id_cliente, json datos);
+void escribirClientes(json clientes);
 
 
 struct Orden
