@@ -201,7 +201,6 @@ int main() {
 		json clientes_guardados = copiaClientes();			
 
 		//Checamos que el cliente exista.
-
 		if(clientes_guardados[id_cliente_str].is_null()){
 			return;
 		}
@@ -238,6 +237,11 @@ int main() {
 
 		//Llamamos al funcion para copiar a los clientes de la base de datos
 		json clientes_guardados = copiaClientes();
+
+		//Checamos que el cliente exista.
+		if(clientes_guardados[id_cliente_str].is_null()){
+			return;
+		}
 
 		//Copiamos al cliente
 		json cliente = clientes_guardados[id_cliente_str];
