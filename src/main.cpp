@@ -293,8 +293,8 @@ int main() {
 			bot.getApi().sendMessage(message->chat->id, "Direccion: " + message->text);
 			cliente["direccion"] = message->text;
 
-			//borramos el Alta
-			cliente.erase("continuacion_alta") = false;
+			//Borramos el Alta
+			cliente.erase("continuacion_alta");
 			//Creamos la bandera orden activa
 			cliente["orden"]["activa"]= false;
 			
